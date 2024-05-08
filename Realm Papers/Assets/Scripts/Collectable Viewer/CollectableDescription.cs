@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Freshman.UI.Collectable
+namespace PaperRealms.UI.Collectable
 {
     public class CollectableDescription : MonoBehaviour 
     {

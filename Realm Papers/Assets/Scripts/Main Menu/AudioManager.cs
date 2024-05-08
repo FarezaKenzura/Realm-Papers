@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[System.Serializable]
-public struct Sound
+[Serializable]
+public class Sound
 {
     public string name;
     public AudioClip clip;
@@ -12,7 +12,7 @@ public struct Sound
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    public static AudioManager Instance {get; private set;}
     public Sound[] audioMusic, audioSFX;
     public AudioSource musicSource, sfxSource;
 
@@ -23,15 +23,12 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
+        if(Instance != null)
         {
             Destroy(gameObject);
             return;
         }
+        Instance = this;
     }
 
     public void PlayMusic(string name)

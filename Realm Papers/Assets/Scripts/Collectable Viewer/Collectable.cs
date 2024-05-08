@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Freshman.UI.Collectable
+namespace PaperRealms.UI.Collectable
 {
     public class Collectable : MonoBehaviour 
     {
@@ -13,7 +13,9 @@ namespace Freshman.UI.Collectable
         public void ShowCollectableDescription()
         {
             // Menampilkan deskripsi collectable ke UI
-            collectableDescription.SetDescription(collectableData.collectableCard, collectableData.subjectText, collectableData.messageText, collectableData.sincerelyText);
+            collectableDescription.SetDescription(
+                collectableData.collectableCard, collectableData.subjectText, collectableData.messageText, collectableData.sincerelyText
+                );
         }
     }
 }

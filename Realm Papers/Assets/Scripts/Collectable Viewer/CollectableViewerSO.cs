@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Freshman.UI.Collectable
+namespace PaperRealms.UI.Collectable
 {
     [CreateAssetMenu(fileName = "CollectableViewerSO", menuName = "CollectableViewerSO", order = 0)]
     public class CollectableViewerSO : ScriptableObject 

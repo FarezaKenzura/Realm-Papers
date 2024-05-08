@@ -4,37 +4,40 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MainMenuUI : MonoBehaviour
+namespace PaperRealms.UI.MainMenu
 {
-    [Header("Panel")]
-    [SerializeField] private GameObject mainMenuPanel;
-    [SerializeField] private GameObject settingsPanel;
-    [SerializeField] private GameObject creditsPanel;
-
-    public void StartGame()
+    public class MainMenuUI : MonoBehaviour
     {
-        SceneManager.LoadScene("Game Scene");
-    }
+        [Header("Panel")]
+        [SerializeField] private GameObject mainMenuPanel;
+        [SerializeField] private GameObject settingsPanel;
+        [SerializeField] private GameObject creditsPanel;
 
-    public void TogglePanel(GameObject panel)
-    {
-        if (panel == settingsPanel)
+        public void StartGame()
         {
-            mainMenuPanel.SetActive(false);
-            settingsPanel.SetActive(true);
-            creditsPanel.SetActive(false);
+            SceneManager.LoadScene("Game Scene");
         }
-        else if (panel == creditsPanel)
-        {
-            mainMenuPanel.SetActive(false);
-            settingsPanel.SetActive(false);
-            creditsPanel.SetActive(true);
-        }
-    }
 
-    public void ExitGame()
-    {
-        Debug.Log("Exit");
-        Application.Quit();
+        public void TogglePanel(GameObject panel)
+        {
+            if (panel == settingsPanel)
+            {
+                mainMenuPanel.SetActive(false);
+                settingsPanel.SetActive(true);
+                creditsPanel.SetActive(false);
+            }
+            else if (panel == creditsPanel)
+            {
+                mainMenuPanel.SetActive(false);
+                settingsPanel.SetActive(false);
+                creditsPanel.SetActive(true);
+            }
+        }
+
+        public void ExitGame()
+        {
+            Debug.Log("Exit");
+            Application.Quit();
+        }
     }
 }

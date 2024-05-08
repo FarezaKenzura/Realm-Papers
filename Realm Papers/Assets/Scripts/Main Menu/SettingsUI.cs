@@ -1,178 +1,174 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 using TMPro;
-public class SettingsUI : MonoBehaviour
+
+namespace PaperRealms.UI.MainMenu 
 {
-    [Header("Resolution Setting")]
-    public TextMeshProUGUI resolutionText;
-    private List<string> resolutions = new List<string> {  "1024 x 768",  "1280 x 720", "1920 x 1080" };
-
-    [Header("Quality Setting")]
-    public TextMeshProUGUI qualityText;
-
-    [Header("Volume Sliders")]
-    public Slider masterVolumeSlider;
-    public Slider musicVolumeSlider;
-    public Slider sfxVolumeSlider;
-    public AudioManager audioManager;
-
-    private int currentResolutionIndex;
-    private int currentQualityIndex;
-
-    private void Start()
+    public class SettingsUI : MonoBehaviour
     {
-        currentResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", GetDefaultResolutionIndex());
-        currentQualityIndex = GetDefaultQualityIndex();
-        
-        ApplySettings();
+        [Header("Resolution Setting")]
+        public TextMeshProUGUI resolutionText;
+        private List<string> resolutions = new List<string> {  "1024 x 768",  "1280 x 720", "1920 x 1080" };
 
-        masterVolumeSlider.onValueChanged.AddListener(value => SetVolume(masterVolumeSlider, value));
-        musicVolumeSlider.onValueChanged.AddListener(value => SetVolume(musicVolumeSlider, value));
-        sfxVolumeSlider.onValueChanged.AddListener(value => SetVolume(sfxVolumeSlider, value));
-    }
+        [Header("Quality Setting")]
+        public TextMeshProUGUI qualityText;
 
-    private void ApplySettings()
-    {
-        currentQualityIndex = PlayerPrefs.GetInt("QualityIndex", GetDefaultQualityIndex());
-        QualitySettings.SetQualityLevel(currentQualityIndex);
+        [Header("Volume Sliders")]
+        public Slider masterVolumeSlider;
+        public Slider musicVolumeSlider;
+        public Slider sfxVolumeSlider;
+        public AudioManager audioManager;
 
-        UpdateResolutionText();
-        UpdateQualityText();
+        private int currentResolutionIndex;
+        private int currentQualityIndex;
 
-        masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", audioManager.GetVolume(AudioSourceType.Master));
-        musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", audioManager.GetVolume(AudioSourceType.Music));
-        sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", audioManager.GetVolume(AudioSourceType.SFX));
-
-        masterVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Master);
-        musicVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Music);
-        sfxVolumeSlider.value = audioManager.GetVolume(AudioSourceType.SFX);
-    }
-
-    #region Resolution
-
-    public void NextResolution()
-    {
-        currentResolutionIndex = Mathf.Min(currentResolutionIndex + 1, resolutions.Count - 1);
-        SetResolution(currentResolutionIndex);
-        UpdateResolutionText();
-
-        AudioManager.instance.PlaySFX("Klik Button");
-    }
-
-    public void PreviousResolution()
-    {
-        currentResolutionIndex = Mathf.Max(currentResolutionIndex - 1, 0);
-        SetResolution(currentResolutionIndex);
-        UpdateResolutionText();
-
-        AudioManager.instance.PlaySFX("Klik Button");
-    }
-
-    private void SetResolution(int resolutionIndex)
-    {
-        string[] resolutionValues = resolutions[resolutionIndex].Split('x');
-        int width = int.Parse(resolutionValues[0].Trim());
-        int height = int.Parse(resolutionValues[1].Trim());
-
-        Screen.SetResolution(width, height, Screen.fullScreen);
-
-        PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
-    }
-
-    private void UpdateResolutionText()
-    {
-        string currentResolution = resolutions[currentResolutionIndex];
-
-        string resolutionLabel = GetResolutionLabel(currentResolution);
-
-        resolutionText.text = resolutionLabel;
-    }
-
-    private int GetDefaultResolutionIndex()
-    {
-        return resolutions.IndexOf("1920 x 1080");
-    }
-
-    private string GetResolutionLabel(string resolution)
-    {
-        if (resolution.Contains("1920 x 1080"))
+        private void Start()
         {
-            return "1080p";
-        }
-        else if (resolution.Contains("1280 x 720"))
-        {
-            return "720p";
-        }
-        else if (resolution.Contains("1024 x 768"))
-        {
-            return "480p";
-        }
-        else
-        {
-            return "Unknown";
-        }
-    }
+            currentResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", GetDefaultResolutionIndex());
+            currentQualityIndex = GetDefaultQualityIndex();
+            
+            ApplySettings();
 
-    #endregion
-
-    #region Quality
-    public void NextQuality()
-    {
-        currentQualityIndex = Mathf.Min(currentQualityIndex + 1, QualitySettings.names.Length - 1);
-        QualitySettings.SetQualityLevel(currentQualityIndex);
-        PlayerPrefs.SetInt("QualityIndex", currentQualityIndex);
-        UpdateQualityText();
-
-        AudioManager.instance.PlaySFX("Klik Button");
-    }
-
-    public void PreviousQuality()
-    {
-        currentQualityIndex = Mathf.Max(currentQualityIndex - 1, 0);
-        QualitySettings.SetQualityLevel(currentQualityIndex);
-        PlayerPrefs.SetInt("QualityIndex", currentQualityIndex);
-        UpdateQualityText();
-
-        AudioManager.instance.PlaySFX("Klik Button");
-    }
-
-    private void UpdateQualityText()
-    {
-        qualityText.text = QualitySettings.names[currentQualityIndex];
-    }
-
-
-    private int GetDefaultQualityIndex()
-    {
-        int defaultQualityIndex = QualitySettings.GetQualityLevel();
-        return defaultQualityIndex;
-    }
-
-    #endregion
-
-    #region Volume
-
-    public void SetVolume(Slider slider, float volume)
-    {
-        if (slider == masterVolumeSlider)
-        {
-            audioManager.SetVolume(AudioSourceType.Master, volume);
-        }
-        else if (slider == musicVolumeSlider)
-        {
-            audioManager.SetVolume(AudioSourceType.Music, volume);
-        }
-        else if (slider == sfxVolumeSlider)
-        {
-            audioManager.SetVolume(AudioSourceType.SFX, volume);
+            masterVolumeSlider.onValueChanged.AddListener(value => SetVolume(masterVolumeSlider, value));
+            musicVolumeSlider.onValueChanged.AddListener(value => SetVolume(musicVolumeSlider, value));
+            sfxVolumeSlider.onValueChanged.AddListener(value => SetVolume(sfxVolumeSlider, value));
         }
 
-        PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
-        PlayerPrefs.SetFloat("MusicVolume", musicVolumeSlider.value);
-        PlayerPrefs.SetFloat("SFXVolume", sfxVolumeSlider.value);
-    }
+        private void ApplySettings()
+        {
+            currentQualityIndex = PlayerPrefs.GetInt("QualityIndex", GetDefaultQualityIndex());
+            QualitySettings.SetQualityLevel(currentQualityIndex);
 
-    #endregion
+            UpdateResolutionText();
+            UpdateQualityText();
+
+            masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", audioManager.GetVolume(AudioSourceType.Master));
+            musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", audioManager.GetVolume(AudioSourceType.Music));
+            sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", audioManager.GetVolume(AudioSourceType.SFX));
+
+            masterVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Master);
+            musicVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Music);
+            sfxVolumeSlider.value = audioManager.GetVolume(AudioSourceType.SFX);
+        }
+
+        #region Resolution
+
+        public void NextResolution()
+        {
+            currentResolutionIndex = Mathf.Min(currentResolutionIndex + 1, resolutions.Count - 1);
+            SetResolution(currentResolutionIndex);
+            UpdateResolutionText();
+        }
+
+        public void PreviousResolution()
+        {
+            currentResolutionIndex = Mathf.Max(currentResolutionIndex - 1, 0);
+            SetResolution(currentResolutionIndex);
+            UpdateResolutionText();
+        }
+
+        private void SetResolution(int resolutionIndex)
+        {
+            string[] resolutionValues = resolutions[resolutionIndex].Split('x');
+            int width = int.Parse(resolutionValues[0].Trim());
+            int height = int.Parse(resolutionValues[1].Trim());
+
+            Screen.SetResolution(width, height, Screen.fullScreen);
+
+            PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
+        }
+
+        private void UpdateResolutionText()
+        {
+            string currentResolution = resolutions[currentResolutionIndex];
+
+            string resolutionLabel = GetResolutionLabel(currentResolution);
+
+            resolutionText.text = resolutionLabel;
+        }
+
+        private int GetDefaultResolutionIndex()
+        {
+            return resolutions.IndexOf("1920 x 1080");
+        }
+
+        private string GetResolutionLabel(string resolution)
+        {
+            if (resolution.Contains("1920 x 1080"))
+            {
+                return "1080p";
+            }
+            else if (resolution.Contains("1280 x 720"))
+            {
+                return "720p";
+            }
+            else if (resolution.Contains("1024 x 768"))
+            {
+                return "480p";
+            }
+            else
+            {
+                return "Unknown";
+            }
+        }
+
+        #endregion
+
+        #region Quality
+        public void NextQuality()
+        {
+            currentQualityIndex = Mathf.Min(currentQualityIndex + 1, QualitySettings.names.Length - 1);
+            QualitySettings.SetQualityLevel(currentQualityIndex);
+            PlayerPrefs.SetInt("QualityIndex", currentQualityIndex);
+            UpdateQualityText();
+        }
+
+        public void PreviousQuality()
+        {
+            currentQualityIndex = Mathf.Max(currentQualityIndex - 1, 0);
+            QualitySettings.SetQualityLevel(currentQualityIndex);
+            PlayerPrefs.SetInt("QualityIndex", currentQualityIndex);
+            UpdateQualityText();
+        }
+
+        private void UpdateQualityText()
+        {
+            qualityText.text = QualitySettings.names[currentQualityIndex];
+        }
+
+
+        private int GetDefaultQualityIndex()
+        {
+            int defaultQualityIndex = QualitySettings.GetQualityLevel();
+            return defaultQualityIndex;
+        }
+
+        #endregion
+
+        #region Volume
+
+        public void SetVolume(Slider slider, float volume)
+        {
+            if (slider == masterVolumeSlider)
+            {
+                audioManager.SetVolume(AudioSourceType.Master, volume);
+            }
+            else if (slider == musicVolumeSlider)
+            {
+                audioManager.SetVolume(AudioSourceType.Music, volume);
+            }
+            else if (slider == sfxVolumeSlider)
+            {
+                audioManager.SetVolume(AudioSourceType.SFX, volume);
+            }
+
+            PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
+            PlayerPrefs.SetFloat("MusicVolume", musicVolumeSlider.value);
+            PlayerPrefs.SetFloat("SFXVolume", sfxVolumeSlider.value);
+        }
+
+        #endregion
+    }
 }

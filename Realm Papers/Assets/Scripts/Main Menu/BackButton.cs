@@ -17,7 +17,5 @@ public class BackButton : MonoBehaviour
     public void Back()
     {
         panel.SetActive(false);
-        
-        AudioManager.instance.PlaySFX("Klik Button");
     }
 }

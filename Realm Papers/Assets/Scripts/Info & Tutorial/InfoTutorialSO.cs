@@ -1,9 +1,16 @@
+using System;
 using UnityEngine;
 
-namespace Freshman.UI.InfoTutorial
+namespace PaperRealms.UI.InfoTutorial
 {
     [CreateAssetMenu(fileName = "InfoTutorialSO", menuName = "InfoTutorialSO", order = 0)]
     public class InfoTutorialSO : ScriptableObject 
+    {
+        public TutorialData[] Data;
+    }
+
+    [Serializable]
+    public class TutorialData
     {
         public Sprite backgroundInfo;
         public string subjectText;
