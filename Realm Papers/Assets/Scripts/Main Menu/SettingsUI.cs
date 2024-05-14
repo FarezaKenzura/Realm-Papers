@@ -9,17 +9,17 @@ namespace PaperRealms.UI.MainMenu
     public class SettingsUI : MonoBehaviour
     {
         [Header("Resolution Setting")]
-        public TextMeshProUGUI resolutionText;
+        [SerializeField] private TextMeshProUGUI resolutionText;
         private List<string> resolutions = new List<string> {  "1024 x 768",  "1280 x 720", "1920 x 1080" };
 
         [Header("Quality Setting")]
-        public TextMeshProUGUI qualityText;
+        [SerializeField] private TextMeshProUGUI qualityText;
 
         [Header("Volume Sliders")]
-        public Slider masterVolumeSlider;
-        public Slider musicVolumeSlider;
-        public Slider sfxVolumeSlider;
-        public AudioManager audioManager;
+        [SerializeField] private Slider masterVolumeSlider;
+        [SerializeField] private Slider musicVolumeSlider;
+        [SerializeField] private Slider sfxVolumeSlider;
+        //[SerializeField] private AudioManager audioManager;
 
         private int currentResolutionIndex;
         private int currentQualityIndex;
@@ -31,9 +31,9 @@ namespace PaperRealms.UI.MainMenu
             
             ApplySettings();
 
-            masterVolumeSlider.onValueChanged.AddListener(value => SetVolume(masterVolumeSlider, value));
-            musicVolumeSlider.onValueChanged.AddListener(value => SetVolume(musicVolumeSlider, value));
-            sfxVolumeSlider.onValueChanged.AddListener(value => SetVolume(sfxVolumeSlider, value));
+            //masterVolumeSlider.onValueChanged.AddListener(value => SetVolume(masterVolumeSlider, value));
+            //musicVolumeSlider.onValueChanged.AddListener(value => SetVolume(musicVolumeSlider, value));
+            //sfxVolumeSlider.onValueChanged.AddListener(value => SetVolume(sfxVolumeSlider, value));
         }
 
         private void ApplySettings()
@@ -44,13 +44,13 @@ namespace PaperRealms.UI.MainMenu
             UpdateResolutionText();
             UpdateQualityText();
 
-            masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", audioManager.GetVolume(AudioSourceType.Master));
-            musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", audioManager.GetVolume(AudioSourceType.Music));
-            sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", audioManager.GetVolume(AudioSourceType.SFX));
+            //masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", audioManager.GetVolume(AudioSourceType.Master));
+            //musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", audioManager.GetVolume(AudioSourceType.Music));
+            //sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", audioManager.GetVolume(AudioSourceType.SFX));
 
-            masterVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Master);
-            musicVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Music);
-            sfxVolumeSlider.value = audioManager.GetVolume(AudioSourceType.SFX);
+            //masterVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Master);
+            //musicVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Music);
+            //sfxVolumeSlider.value = audioManager.GetVolume(AudioSourceType.SFX);
         }
 
         #region Resolution
@@ -149,7 +149,7 @@ namespace PaperRealms.UI.MainMenu
 
         #region Volume
 
-        public void SetVolume(Slider slider, float volume)
+        /*public void SetVolume(Slider slider, float volume)
         {
             if (slider == masterVolumeSlider)
             {
@@ -167,7 +167,7 @@ namespace PaperRealms.UI.MainMenu
             PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
             PlayerPrefs.SetFloat("MusicVolume", musicVolumeSlider.value);
             PlayerPrefs.SetFloat("SFXVolume", sfxVolumeSlider.value);
-        }
+        }*/
 
         #endregion
     }
