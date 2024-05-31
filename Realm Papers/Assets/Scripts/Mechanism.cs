@@ -11,33 +11,38 @@ public class Mechanism : MonoBehaviour, IInteractable
     [Tooltip("Titik kontrol untuk jalur melengkung.")]
     [SerializeField] private Vector3[] controlPoints;
 
-    public ReactiveProperty<bool> isActivated = new ReactiveProperty<bool>(false);
+    private ReactiveProperty<bool> isActivated = new ReactiveProperty<bool>(false);
+    private bool isInitialized = false;
 
     private void Start()
     {
-        // Berlangganan perubahan status isActivated
-        isActivated
-            .Subscribe(activated =>
-            {
-                Debug.Log("IsActivated changed: " + activated);
-                if (activated)
-                {
-                    platformMover.MoveAlongPath(controlPoints);
-                }
-                else
-                {
-                    platformMover.MoveToInitialPosition();
-                }
-            })
-            .AddTo(this);
+        isActivated.Subscribe(OnActivatedChanged).AddTo(this);
     }
 
-    public bool IsActivated => isActivated.Value;
+    public bool IsInitialized => isInitialized;
 
     public void Interact()
     {
-        Debug.Log("Interact called. Current state: " + isActivated.Value);
+        if (platformMover.IsMoving)
+        {
+            Debug.Log("Cannot interact while the platform is moving.");
+            return;
+        }
+
         isActivated.Value = !isActivated.Value;
-        Debug.Log("New state: " + isActivated.Value);
+    }
+
+    private void OnActivatedChanged(bool activated)
+    {
+        if (!IsInitialized)
+        {
+            isInitialized = true;
+            return;
+        }
+
+        if (activated)
+            platformMover.MoveAlongPath(controlPoints);
+        else
+            platformMover.MoveToInitialPosition(controlPoints);
     }
 }

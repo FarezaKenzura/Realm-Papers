@@ -18,7 +18,7 @@ public class CharacterInput : MonoBehaviour
         foreach (Collider2D col in colliders)
         {
             IInteractable interactable = col.GetComponent<IInteractable>();
-            if (interactable == null || interactable.IsActivated) continue;
+            if (interactable == null) continue;
 
             foreach (InteractPopupData popupData in interactPopupDataList)
             {

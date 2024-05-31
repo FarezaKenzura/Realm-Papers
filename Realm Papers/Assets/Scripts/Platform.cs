@@ -4,26 +4,24 @@ using System;
 
 public class Platform : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Speed Properties")]
     [Tooltip("Kecepatan pergerakan platform.")]
     [SerializeField] private float moveDuration = 2f;
-
-    private Vector3 initialPosition;
+    private bool isMoving;
     private IDisposable moveSubscription;
-    
-    private void Start()
-    {
-        initialPosition = transform.position;
-    }
 
-    public void MoveToInitialPosition()
+    public bool IsMoving => isMoving;
+
+    public void MoveToInitialPosition(Vector3[] originalControlPoints)
     {
-        MoveAlongPath(new Vector3[] { transform.position, initialPosition });
+        Vector3[] reversedControlPoints = GetReversedControlPoints(originalControlPoints);
+        MoveAlongPath(reversedControlPoints);
     }
 
     public void MoveAlongPath(Vector3[] controlPoints)
     {
         moveSubscription?.Dispose();
+        isMoving = true;
         float startTime = Time.time;
 
         moveSubscription = Observable.EveryUpdate()
@@ -32,12 +30,22 @@ public class Platform : MonoBehaviour
             .Subscribe(t =>
             {
                 transform.position = BezierUtility.CalculateBezierPoint(t, controlPoints);
-
-                if (t >= 1f)
-                {
-                    moveSubscription.Dispose();
-                }
+            }, () =>
+            {
+                isMoving = false;
             })
-            .AddTo(this);;
+            .AddTo(this);
+    }
+
+    private Vector3[] GetReversedControlPoints(Vector3[] originalControlPoints)
+    {
+        Vector3[] reversedControlPoints = new Vector3[originalControlPoints.Length];
+        for (int i = 0; i < originalControlPoints.Length; i++)
+        {
+            reversedControlPoints[i] = originalControlPoints[originalControlPoints.Length - 1 - i];
+        }
+
+        reversedControlPoints[0] = transform.position;
+        return reversedControlPoints;
     }
 }
