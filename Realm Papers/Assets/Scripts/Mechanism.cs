@@ -1,32 +1,48 @@
 using UnityEngine;
+using UniRx;
 
 public class Mechanism : MonoBehaviour, IInteractable 
 {
     [Header("Platform Reference")]
     [Tooltip("Referensi ke objek platform yang akan digerakkan.")]
-    [SerializeField] private Platform platformToMove;
+    [SerializeField] private Platform platformMover;
 
-    /// <summary>
-    /// Apakah mekanisme telah diaktifkan.
-    /// </summary>
-    public bool IsActivated => false;
+    [Header("Target Positions")]
+    [Tooltip("Titik kontrol untuk jalur melengkung.")]
+    [SerializeField] private Vector3[] controlPoints;
 
-    /// <summary>
-    /// Menginteraksi dengan mekanisme.
-    /// </summary>
+    private ReactiveProperty<bool> isActivated = new ReactiveProperty<bool>(false);
+    private bool isInitialized = false;
+
+    private void Start()
+    {
+        isActivated.Subscribe(OnActivatedChanged).AddTo(this);
+    }
+
+    public bool IsInitialized => isInitialized;
+
     public void Interact()
     {
-        if(!IsActivated)
+        if (platformMover.IsMoving)
         {
-            // Jika platform berada di posisi awal, gerakkan ke atas
-            if (platformToMove.transform.position == platformToMove.GetInitialPosition())
-            {
-                platformToMove.MovePlatformUp();
-            }
-            else // Jika platform sudah berada di atas, gerakkan ke bawah
-            {
-                platformToMove.MovePlatformDown();
-            }
+            Debug.Log("Cannot interact while the platform is moving.");
+            return;
         }
+
+        isActivated.Value = !isActivated.Value;
+    }
+
+    private void OnActivatedChanged(bool activated)
+    {
+        if (!IsInitialized)
+        {
+            isInitialized = true;
+            return;
+        }
+
+        if (activated)
+            platformMover.MoveAlongPath(controlPoints);
+        else
+            platformMover.MoveToInitialPosition(controlPoints);
     }
 }

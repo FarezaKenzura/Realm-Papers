@@ -9,11 +9,11 @@ namespace PaperRealms.UI.Collectable
         // Data collectable
         [SerializeField] private CollectableViewerSO collectableData;
 
-        public bool IsActivated => false;
+        public bool IsInitialized => false;
 
         public void Interact()
         {
-            if(!IsActivated)
+            if(!IsInitialized)
                 ShowCollectableDescription();
         }
 

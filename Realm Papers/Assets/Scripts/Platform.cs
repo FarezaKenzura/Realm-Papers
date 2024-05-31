@@ -1,99 +1,51 @@
 using UnityEngine;
+using UniRx;
+using System;
 
 public class Platform : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("Kurva pergerakan platform.")]
-    [SerializeField] private AnimationCurve moveCurve;
+    [Header("Speed Properties")]
     [Tooltip("Kecepatan pergerakan platform.")]
-    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float moveDuration = 2f;
+    private bool isMoving;
+    private IDisposable moveSubscription;
 
-    [Header("Range")]
-    [Tooltip("Jarak pergerakan platform.")]
-    [SerializeField] private float moveRange;
+    public bool IsMoving => isMoving;
 
-    private Vector3 initialPosition;
-    private Vector3 targetPosition;
-    private bool moving;
-
-    private void Start()
+    public void MoveToInitialPosition(Vector3[] originalControlPoints)
     {
-        initialPosition = transform.position;
+        Vector3[] reversedControlPoints = GetReversedControlPoints(originalControlPoints);
+        MoveAlongPath(reversedControlPoints);
     }
 
-    private void Update()
+    public void MoveAlongPath(Vector3[] controlPoints)
     {
-        if (moving)
+        moveSubscription?.Dispose();
+        isMoving = true;
+        float startTime = Time.time;
+
+        moveSubscription = Observable.EveryUpdate()
+            .Select(_ => (Time.time - startTime) / moveDuration)
+            .TakeWhile(t => t <= 1f)
+            .Subscribe(t =>
+            {
+                transform.position = BezierUtility.CalculateBezierPoint(t, controlPoints);
+            }, () =>
+            {
+                isMoving = false;
+            })
+            .AddTo(this);
+    }
+
+    private Vector3[] GetReversedControlPoints(Vector3[] originalControlPoints)
+    {
+        Vector3[] reversedControlPoints = new Vector3[originalControlPoints.Length];
+        for (int i = 0; i < originalControlPoints.Length; i++)
         {
-            MovePlatform();
+            reversedControlPoints[i] = originalControlPoints[originalControlPoints.Length - 1 - i];
         }
+
+        reversedControlPoints[0] = transform.position;
+        return reversedControlPoints;
     }
-
-    #region Public Methods
-
-    /// <summary>
-    /// Memindahkan platform ke atas.
-    /// </summary>
-    public void MovePlatformUp()
-    {
-        if (!moving)
-        {
-            targetPosition = initialPosition + Vector3.up * moveRange;
-            moving = true;
-        }
-    }
-
-    /// <summary>
-    /// Memindahkan platform ke bawah.
-    /// </summary>
-    public void MovePlatformDown()
-    {
-        if (!moving)
-        {
-            targetPosition = initialPosition; // Kembali ke posisi awal
-            moving = true;
-        }
-    }
-
-    /// <summary>
-    /// Mengembalikan posisi awal platform.
-    /// </summary>
-    /// <returns>Posisi awal platform.</returns>
-    public Vector3 GetInitialPosition()
-    {
-        return initialPosition;
-    }
-
-    /// <summary>
-    /// Mengembalikan posisi target platform.
-    /// </summary>
-    /// <returns>Posisi target platform.</returns>
-    public Vector3 GetTargetPosition()
-    {
-        return targetPosition;
-    }
-
-    #endregion
-
-    #region Private Methods
-
-    /// <summary>
-    /// Memindahkan platform sesuai dengan kurva pergerakan.
-    /// </summary>
-    private void MovePlatform()
-    {
-        float curveValue = moveCurve.Evaluate(Time.time);
-        Vector3 newPosition = Vector3.Lerp(initialPosition, targetPosition, curveValue); 
-
-        // Pindahkan platform ke posisi baru
-        transform.position = Vector3.MoveTowards(transform.position, newPosition, moveSpeed * Time.deltaTime);
-
-        // Periksa apakah platform telah mencapai posisi target
-        if (transform.position == targetPosition)
-        {
-            moving = false;
-        }
-    }
-
-    #endregion
 }
