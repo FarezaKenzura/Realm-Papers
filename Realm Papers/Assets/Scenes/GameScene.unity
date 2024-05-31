@@ -265,7 +265,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d625a3494af062b41a96fe7db3f3214f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformToMove: {fileID: 1365348455}
+  platformMover: {fileID: 1365348455}
+  controlPoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: 2.5, y: 5, z: 0}
+  - {x: 5, y: 0, z: 0}
 --- !u!1 &1121060081
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,33 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796fd316ba21b5f4dacbcf5ff5b21004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  moveSpeed: 2
-  initialPosition: {x: 0, y: 0, z: 0}
-  targetPosition: {x: 0, y: 0, z: 0}
+  moveDuration: 2
 --- !u!61 &1365348456
 BoxCollider2D:
   m_ObjectHideFlags: 0

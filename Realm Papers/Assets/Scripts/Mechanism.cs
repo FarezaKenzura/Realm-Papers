@@ -1,32 +1,43 @@
 using UnityEngine;
+using UniRx;
 
 public class Mechanism : MonoBehaviour, IInteractable 
 {
     [Header("Platform Reference")]
     [Tooltip("Referensi ke objek platform yang akan digerakkan.")]
-    [SerializeField] private Platform platformToMove;
+    [SerializeField] private Platform platformMover;
 
-    /// <summary>
-    /// Apakah mekanisme telah diaktifkan.
-    /// </summary>
-    public bool IsActivated => false;
+    [Header("Target Positions")]
+    [Tooltip("Titik kontrol untuk jalur melengkung.")]
+    [SerializeField] private Vector3[] controlPoints;
 
-    /// <summary>
-    /// Menginteraksi dengan mekanisme.
-    /// </summary>
+    public ReactiveProperty<bool> isActivated = new ReactiveProperty<bool>(false);
+
+    private void Start()
+    {
+        // Berlangganan perubahan status isActivated
+        isActivated
+            .Subscribe(activated =>
+            {
+                Debug.Log("IsActivated changed: " + activated);
+                if (activated)
+                {
+                    platformMover.MoveAlongPath(controlPoints);
+                }
+                else
+                {
+                    platformMover.MoveToInitialPosition();
+                }
+            })
+            .AddTo(this);
+    }
+
+    public bool IsActivated => isActivated.Value;
+
     public void Interact()
     {
-        if(!IsActivated)
-        {
-            // Jika platform berada di posisi awal, gerakkan ke atas
-            if (platformToMove.transform.position == platformToMove.GetInitialPosition())
-            {
-                platformToMove.MovePlatformUp();
-            }
-            else // Jika platform sudah berada di atas, gerakkan ke bawah
-            {
-                platformToMove.MovePlatformDown();
-            }
-        }
+        Debug.Log("Interact called. Current state: " + isActivated.Value);
+        isActivated.Value = !isActivated.Value;
+        Debug.Log("New state: " + isActivated.Value);
     }
 }
