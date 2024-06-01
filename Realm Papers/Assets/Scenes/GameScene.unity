@@ -270,8 +270,6 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 2.5, y: 5, z: 0}
   - {x: 5, y: 0, z: 0}
-  isActivated:
-    value: 0
 --- !u!1 &1121060081
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +465,7 @@ MonoBehaviour:
   interactRadius: 1
   interactPopupDataList:
   - {fileID: 11400000, guid: 3444b48e3a6206446ae5160d8fbefd69, type: 2}
+  popupOffset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &1316292317
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactRadius: 1
   interactPopupDataList: []
+  popupOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1365348454
 GameObject:
   m_ObjectHideFlags: 0

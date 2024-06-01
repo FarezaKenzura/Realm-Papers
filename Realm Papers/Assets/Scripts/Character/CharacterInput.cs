@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class CharacterInput : MonoBehaviour
 {
-    public float interactRadius;
-    public List<InteractPopupData> interactPopupDataList;
+    [SerializeField] private float interactRadius;
+    [SerializeField] private List<InteractPopupData> interactPopupDataList;
+    [SerializeField] private Vector3 popupOffset;
 
     private GameObject currentInteractPopup;
 
     private void Update()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, interactRadius);
+        HandleInteractables();
+        UpdatePopupPosition();
+    }
 
+    private void HandleInteractables()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, interactRadius);
         bool interactableFound = false;
 
         foreach (Collider2D col in colliders)
@@ -45,7 +51,13 @@ public class CharacterInput : MonoBehaviour
     {
         if (currentInteractPopup == null)
         {
-            currentInteractPopup = Instantiate(interactPopupPrefab, transform.position, Quaternion.identity);
+            currentInteractPopup = Instantiate(interactPopupPrefab, transform.position + popupOffset, Quaternion.identity);
+            currentInteractPopup.transform.localScale = Vector3.zero;
+            LeanTween.scale(currentInteractPopup, Vector3.one, 0.5f).setEase(LeanTweenType.easeInOutQuart);
+        }
+        else
+        {
+            currentInteractPopup.transform.position = transform.position + popupOffset;
         }
     }
 
@@ -53,8 +65,27 @@ public class CharacterInput : MonoBehaviour
     {
         if (currentInteractPopup != null)
         {
-            Destroy(currentInteractPopup);
+            GameObject popupToDestroy = currentInteractPopup;
             currentInteractPopup = null;
+
+            LeanTween.scale(popupToDestroy, Vector3.zero, 0.5f).setEase(LeanTweenType.easeInOutQuart).setOnComplete(() =>
+            {
+                Destroy(popupToDestroy);
+            }).setOnUpdate((float val) =>
+            {
+                if (popupToDestroy != null)
+                {
+                    popupToDestroy.transform.position = transform.position + popupOffset;
+                }
+            });
+        }
+    }
+
+    private void UpdatePopupPosition()
+    {
+        if (currentInteractPopup != null)
+        {
+            currentInteractPopup.transform.position = transform.position + popupOffset;
         }
     }
 

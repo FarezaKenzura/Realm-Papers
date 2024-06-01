@@ -6,7 +6,7 @@ namespace PaperRealms.System.CharacterMovement
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BoxCollider2D))]
-    public class CharacterController : MonoBehaviour
+    public class CharacterController2D : MonoBehaviour
     {
         [SerializeField] private float speed = 5f;
         [SerializeField] private float jumpForce = 10f;
