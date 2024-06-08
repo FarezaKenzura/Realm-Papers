@@ -3,14 +3,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using PaperRealms.UI.InfoTutorial;
+using PaperRealm.System.GameManager;
 
 public class InfoTutorialManager : MonoBehaviour 
 {
+    [Header("Tutorial UI")]
+    [SerializeField] private RectTransform tutorialPanel;
+
     [Header("Tutorial Data")]
     [SerializeField] private InfoTutorialSO tutorialData;
 
-    [Header("UI")]
-    [SerializeField] private GameObject cnvsTutorial;
+    [Header("Tutorial UI Components")]
     [SerializeField] private TextMeshProUGUI txtContent;
     [SerializeField] private TextMeshProUGUI subjectContent;
     [SerializeField] private Image imgTutorial;
@@ -23,37 +26,48 @@ public class InfoTutorialManager : MonoBehaviour
         btnNext.onClick.AddListener(NextTutorial);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         SetUpTutorial();
     }
 
-    private void SetUpTutorial()
+     private void SetUpTutorial()
     {
-        cnvsTutorial.SetActive(true);
-        index = 0;
-        NextTutorial();
+        tutorialPanel.anchoredPosition = new Vector2(-Screen.width, Screen.height);
+        LeanTween.move(tutorialPanel, Vector2.zero, 0.5f).setEase(LeanTweenType.easeOutQuad);
+        UpdateTutorialContent();
+        GameManager.Instance.CurrentState = GameState.Tutorial;
     }
 
     private void NextTutorial()
     {
-        if (index < tutorialData.Data.Length)
+        if (index < tutorialData.Data.Length - 1)
         {
-            imgTutorial.sprite = tutorialData.Data[index].backgroundInfo;
-            subjectContent.SetText(tutorialData.Data[index].subjectText);
-            txtContent.SetText(tutorialData.Data[index].tutorialText);
             index++;
+            UpdateTutorialContent();
         }
         else
         {
             EndTutorial();
         }
-        
     }
 
     private void EndTutorial()
     {
-        cnvsTutorial.SetActive(false);
+        // Move to bottom right
+        LeanTween.move(tutorialPanel, new Vector2(Screen.width, -Screen.height), 0.5f)
+            .setEase(LeanTweenType.easeInQuad)
+            .setOnComplete(() =>
+            {
+                GameManager.Instance.CurrentState = GameState.GamePlay;
+                gameObject.SetActive(false); // Disable the animation controller object
+            });
+    }
+
+    private void UpdateTutorialContent()
+    {
+        imgTutorial.sprite = tutorialData.Data[index].backgroundInfo;
+        subjectContent.SetText(tutorialData.Data[index].subjectText);
+        txtContent.SetText(tutorialData.Data[index].tutorialText);
     }
 }

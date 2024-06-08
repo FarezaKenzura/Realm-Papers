@@ -10,7 +10,6 @@ namespace PaperRealms.UI.MainMenu
     {
         [Header("Button")]
         [SerializeField] private Button startGameButton;
-        [SerializeField] private Button localMultiplayerButton;
         [SerializeField] private Button settingButton;
         [SerializeField] private Button creditsButton;
         [SerializeField] private Button exitButton;
@@ -23,7 +22,6 @@ namespace PaperRealms.UI.MainMenu
         private void Start()
         {
             startGameButton.onClick.AddListener(StartGame);
-            localMultiplayerButton.onClick.AddListener(LocalMultiplayer);
             settingButton.onClick.AddListener(() => TogglePanel(settingsPanel));
             creditsButton.onClick.AddListener(() => TogglePanel(creditsPanel));
             exitButton.onClick.AddListener(ExitGame);
@@ -31,12 +29,7 @@ namespace PaperRealms.UI.MainMenu
 
         private void StartGame()
         {
-            SceneManager.LoadScene("Game Scene");
-        }
-
-        private void LocalMultiplayer()
-        {
-            SceneManager.LoadScene("Game Multiplayer Scene");
+            SceneManager.LoadScene("GameScene");
         }
 
         private void TogglePanel(GameObject panel)

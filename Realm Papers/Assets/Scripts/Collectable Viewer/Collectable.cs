@@ -1,3 +1,4 @@
+using PaperRealm.System.GameManager;
 using UnityEngine;
 
 namespace PaperRealms.UI.Collectable
@@ -13,17 +14,19 @@ namespace PaperRealms.UI.Collectable
 
         public void Interact()
         {
-            if(!IsInitialized)
+            if (!collectableDescription.IsVisible && !IsInitialized)
                 ShowCollectableDescription();
         }
 
-        // Fungsi ini dipanggil saat pemain berinteraksi dengan collectable
         public void ShowCollectableDescription()
         {
-            // Menampilkan deskripsi collectable ke UI
+            collectableDescription.OpenCollectable();
             collectableDescription.SetDescription(
-                collectableData.collectableCard, collectableData.subjectText, collectableData.messageText, collectableData.sincerelyText
-                );
+                collectableData.collectableCard, 
+                collectableData.subjectText, 
+                collectableData.messageText, 
+                collectableData.sincerelyText
+            );
         }
     }
 }
