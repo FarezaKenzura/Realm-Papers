@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PaperRealm.System.GameManager;
 using UnityEngine;
 
 namespace PaperRealms.System.CharacterMovement
@@ -26,6 +27,8 @@ namespace PaperRealms.System.CharacterMovement
 
         void Update()
         {
+            if (GameManager.Instance.CurrentState != GameState.GamePlay) return;
+
             float moveInput = 0f;
 
             if (Input.GetKey(moveLeftKey))
