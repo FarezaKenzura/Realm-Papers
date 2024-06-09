@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using PaperRealm.System.GameManager;
+using UniRx;
 using UnityEngine;
 
 namespace PaperRealms.System.CharacterMovement
@@ -16,40 +17,48 @@ namespace PaperRealms.System.CharacterMovement
         [SerializeField] private KeyCode moveLeftKey;
         [SerializeField] private KeyCode moveRightKey;
         [SerializeField] private KeyCode jumpKey;
+        [SerializeField] private KeyCode pickUpKey;
 
         private Rigidbody2D rb;
-        private bool isGrounded;
-
+        private BoolReactiveProperty isGrounded = new BoolReactiveProperty(false);
+        
         void Start()
         {
             rb = GetComponent<Rigidbody2D>();
+
+            // Handle movement
+            Observable.EveryUpdate()
+                .Where(_ => GameManager.Instance.CurrentState == GameState.GamePlay)
+                .Subscribe(_ =>
+                {
+                    float moveInput = 0f;
+
+                    if (Input.GetKey(moveLeftKey))
+                        moveInput = -1f;
+                    else if (Input.GetKey(moveRightKey))
+                        moveInput = 1f;
+
+                    rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+
+                    if (Input.GetKeyDown(jumpKey) && isGrounded.Value)
+                    {
+                        rb.velocity = Vector2.up * jumpForce;
+                        isGrounded.Value = false;
+                    }
+                }).AddTo(this);
         }
 
-        void Update()
+        // Teleport the player
+        public void Teleport(Vector3 destination)
         {
-            if (GameManager.Instance.CurrentState != GameState.GamePlay) return;
-
-            float moveInput = 0f;
-
-            if (Input.GetKey(moveLeftKey))
-                moveInput = -1f;
-            else if (Input.GetKey(moveRightKey))
-                moveInput = 1f;
-
-            rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
-
-            if (Input.GetKeyDown(jumpKey) && isGrounded)
-            {
-                rb.velocity = Vector2.up * jumpForce;
-                isGrounded = false;
-            }
+            transform.position = destination;
         }
 
         void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("Ground"))
             {
-                isGrounded = true;
+                isGrounded.Value = true;
             }
         }
     }
