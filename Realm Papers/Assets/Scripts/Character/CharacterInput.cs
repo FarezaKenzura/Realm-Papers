@@ -7,13 +7,21 @@ public class CharacterInput : MonoBehaviour
     [SerializeField] private float interactRadius;
     [SerializeField] private List<InteractPopupData> interactPopupDataList;
     [SerializeField] private Vector3 popupOffset;
+    [SerializeField] private KeyCode interactKey = KeyCode.F;  // Interaction key
+    [SerializeField] private KeyCode dropKey = KeyCode.G;      // Drop key
 
     private GameObject currentInteractPopup;
+    private InteractableObject carriedObject;
 
     private void Update()
     {
         HandleInteractables();
         UpdatePopupPosition();
+
+        if (carriedObject != null && Input.GetKeyDown(dropKey))
+        {
+            DropCarriedObject();
+        }
     }
 
     private void HandleInteractables()
@@ -33,9 +41,10 @@ public class CharacterInput : MonoBehaviour
                 ShowInteractPopup(popupData.interactPopupPrefab);
                 interactableFound = true;
 
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(interactKey))
                 {
                     interactable.Interact();
+                    TryPickupObject(col.GetComponent<InteractableObject>());
                 }
 
                 break;
@@ -86,6 +95,26 @@ public class CharacterInput : MonoBehaviour
         if (currentInteractPopup != null)
         {
             currentInteractPopup.transform.position = transform.position + popupOffset;
+        }
+    }
+
+    private void TryPickupObject(InteractableObject interactableObject)
+    {
+        if (interactableObject != null && !interactableObject.IsPickedUp)
+        {
+            interactableObject.PickUp();
+            carriedObject = interactableObject;
+            UIManager.Instance.SetCarriedObjectImage(interactableObject.GetComponent<SpriteRenderer>().sprite);
+        }
+    }
+
+    private void DropCarriedObject()
+    {
+        if (carriedObject != null)
+        {
+            carriedObject.Drop(transform.position);
+            carriedObject = null;
+            UIManager.Instance.SetCarriedObjectImage(null);
         }
     }
 
