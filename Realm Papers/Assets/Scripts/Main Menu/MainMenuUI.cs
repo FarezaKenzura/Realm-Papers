@@ -21,6 +21,7 @@ namespace PaperRealms.UI.MainMenu
 
         private void Start()
         {
+            EventManager.SetFade?.Invoke(false);
             startGameButton.onClick.AddListener(StartGame);
             settingButton.onClick.AddListener(() => TogglePanel(settingsPanel));
             creditsButton.onClick.AddListener(() => TogglePanel(creditsPanel));
@@ -29,7 +30,7 @@ namespace PaperRealms.UI.MainMenu
 
         private void StartGame()
         {
-            SceneManager.LoadScene("GameScene");
+            EventManager.OnNextLevel?.Invoke();
         }
 
         private void TogglePanel(GameObject panel)
