@@ -7,20 +7,33 @@ namespace PaperRealms.UI.Dialogue
 {
     public class DialogueManager : MonoBehaviour 
     {
-        [Header("UI")] 
-        [SerializeField] private GameObject _cnvsDialogue;
+        [Header("UI Canvas")] 
+        [SerializeField] private CanvasGroup canvasGroupDialog;
+        
+        [Header("UI Elements")] 
+        [SerializeField] private TextMeshProUGUI txtActorName;
+        [SerializeField] private TextMeshProUGUI txtDialogue;
+        [SerializeField] private Button btnNextDialogue;
 
-        [SerializeField] private TextMeshProUGUI _txtDialogue;
-        [SerializeField] private TextMeshProUGUI _txtActorName;
-        [SerializeField] private DialogueSO _dialogueData;
-        [SerializeField] private Button _btnNextDialogue;
-        private int _dialogueConversationIndex;
+        [Header("Data Dialog")] 
+        [SerializeField] private DialogueSO dialogueData;
+
+        private int dialogueConversationIndex;
+
+        private Vector3 initialPosition;
+        private Vector3 offScreenLeftPosition;
+        private Vector3 offScreenRightPosition;
 
         private void Awake()
         {
-            _btnNextDialogue.onClick.AddListener(NextDialogue);
+            initialPosition = canvasGroupDialog.transform.localPosition;
+            offScreenLeftPosition = initialPosition + new Vector3(-50, 0, 0);
+            offScreenRightPosition = initialPosition + new Vector3(50, 0, 0);
 
+            btnNextDialogue.onClick.AddListener(NextDialogue);
             EventManager.OnDialogueStart += SetUpDialogue;
+
+            SetUpDialogue(dialogueData);
         }
 
         private void OnDestroy()
@@ -30,25 +43,33 @@ namespace PaperRealms.UI.Dialogue
 
         public void SetUpDialogue(DialogueSO data)
         {
-            _dialogueData = data;
+            dialogueData = data;
             StartDialogue();
         }
 
         private void StartDialogue()
         {
-            _cnvsDialogue.SetActive(true);
-            _dialogueConversationIndex = 0;
-            NextDialogue();
+            canvasGroupDialog.alpha = 0;
+            dialogueConversationIndex = 0;
+            canvasGroupDialog.transform.localPosition = offScreenLeftPosition;
 
+            LeanTween.moveLocal(canvasGroupDialog.gameObject, initialPosition, 1f).setEase(LeanTweenType.easeInOutQuad);
+            LeanTween.alphaCanvas(canvasGroupDialog, 1, 1f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+            {
+                canvasGroupDialog.interactable = true;
+                canvasGroupDialog.blocksRaycasts = true;  
+
+                NextDialogue();
+            });
         }
 
         private void NextDialogue()
         {
-            _btnNextDialogue.interactable = false;
+            btnNextDialogue.interactable = false;
             
-            if (_dialogueConversationIndex < _dialogueData.Data.Length)
+            if (dialogueConversationIndex < dialogueData.Data.Length)
             {
-                _txtActorName.SetText(_dialogueData.Data[_dialogueConversationIndex].ActorName);
+                txtActorName.SetText(dialogueData.Data[dialogueConversationIndex].ActorName);
                 StartCoroutine(GeneratingWord());
             }
             else
@@ -60,14 +81,14 @@ namespace PaperRealms.UI.Dialogue
 
         IEnumerator GeneratingWord()
         {
-            _txtDialogue.SetText(_dialogueData.Data[_dialogueConversationIndex].Dialogue);
-            for (int i = 0; i <= _dialogueData.Data[_dialogueConversationIndex].Dialogue.Length; i++)
+            txtDialogue.SetText(dialogueData.Data[dialogueConversationIndex].Dialogue);
+            for (int i = 0; i <= dialogueData.Data[dialogueConversationIndex].Dialogue.Length; i++)
             {
-                _txtDialogue.maxVisibleCharacters = i;
+                txtDialogue.maxVisibleCharacters = i;
                 yield return new WaitForSeconds(0.02f);
             }
-            _btnNextDialogue.interactable = true;
-            _dialogueConversationIndex++;
+            btnNextDialogue.interactable = true;
+            dialogueConversationIndex++;
 
             EventManager.OnSentenceDialogueEnd?.Invoke();
 
@@ -76,8 +97,14 @@ namespace PaperRealms.UI.Dialogue
 
         private void EndDialogue()
         {
-            EventManager.OnDialogueEnd?.Invoke();
-            _cnvsDialogue.SetActive(false);
+            LeanTween.moveLocal(canvasGroupDialog.gameObject, offScreenRightPosition, 1f).setEase(LeanTweenType.easeInOutQuad);
+            LeanTween.alphaCanvas(canvasGroupDialog, 0, 1f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+            {
+                canvasGroupDialog.interactable = false;
+                canvasGroupDialog.blocksRaycasts = false;  
+
+                EventManager.OnDialogueEnd?.Invoke();
+            });
         }
     }
 }
