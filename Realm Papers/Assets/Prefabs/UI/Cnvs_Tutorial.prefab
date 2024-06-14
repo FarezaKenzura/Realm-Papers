@@ -31,8 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 280821263291481341}
-  - {fileID: 4363876242002735527}
-  - {fileID: 4525265026104032169}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -61,7 +59,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: -695563251
-  m_SortingOrder: 3
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &2695335245792381283
 MonoBehaviour:
@@ -113,7 +111,7 @@ RectTransform:
   - {fileID: 3751982983857333295}
   - {fileID: 2815756626096922778}
   - {fileID: 6333537686147389587}
-  m_Father: {fileID: 2025462596796371406}
+  m_Father: {fileID: 280821263291481341}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -400,7 +398,7 @@ RectTransform:
   m_Children:
   - {fileID: 7201249520951888388}
   - {fileID: 5466703090792492824}
-  m_Father: {fileID: 2025462596796371406}
+  m_Father: {fileID: 280821263291481341}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -599,7 +597,7 @@ GameObject:
   - component: {fileID: 2280562090955682134}
   - component: {fileID: 2954953873030685101}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: TutorialPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -614,9 +612,11 @@ RectTransform:
   m_GameObject: {fileID: 7458088415017304448}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.999675, y: 0.999675, z: 0.999675}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4363876242002735527}
+  - {fileID: 4525265026104032169}
   m_Father: {fileID: 2025462596796371406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

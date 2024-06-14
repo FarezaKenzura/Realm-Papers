@@ -9,7 +9,10 @@ public static class EventManager
     public static Action OnSentenceDialogueEnd;
 
     public static Action OnRestartLevel;
+    public static Action OnExitLevel;
     public static Action OnNextLevel;
+
+    public static Action<bool> OnGamePause;
 
     public static Action<bool> SetFade;
     public static Action OnFadeInComplete;
