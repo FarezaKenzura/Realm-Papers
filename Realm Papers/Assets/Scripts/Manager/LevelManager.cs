@@ -13,20 +13,21 @@ namespace PaperRealm.Type.Fitur
 
             EventManager.OnNextLevel += NextLevel;
             EventManager.OnRestartLevel += RestartLevel;
-
+            EventManager.OnExitLevel += ExitLevel;
         }
 
         private void OnDestroy()
         {
             EventManager.OnNextLevel -= NextLevel;
             EventManager.OnRestartLevel -= RestartLevel;
+            EventManager.OnExitLevel -= ExitLevel;
         }
 
         private void NextLevel()
         {
             EventManager.SetFade?.Invoke(true);
 
-            print("NEXT LEVEL");
+            print("Next Level");
 
             LeanTween.delayedCall(1.5f, () =>
             {
@@ -34,9 +35,23 @@ namespace PaperRealm.Type.Fitur
             });
         }
 
+        private void ExitLevel()
+        {
+            EventManager.SetFade?.Invoke(true);
+
+            print("Back To Main Menu");
+
+            LeanTween.delayedCall(1.5f, () =>
+            {
+                SceneManager.LoadScene(0);
+            });
+        }
+
         private void RestartLevel()
         {
             EventManager.SetFade?.Invoke(true);
+
+            print("Restart Level");
 
             LeanTween.delayedCall(1.5f, () =>
             {

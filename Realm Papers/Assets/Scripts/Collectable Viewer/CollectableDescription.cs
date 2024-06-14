@@ -12,7 +12,7 @@ namespace PaperRealms.UI.Collectable
         [Header("UI Components")]
         [SerializeField] private Image cardImage;
         [SerializeField] private TMP_Text subjectText;
-        [SerializeField] private TMP_Text descriptionText;
+        [SerializeField] private TMP_Text contentText;
         [SerializeField] private TMP_Text sincerelyText;
 
         [Header("Animation Settings")]
@@ -34,7 +34,7 @@ namespace PaperRealms.UI.Collectable
         public void ResetDescription() 
         {
             cardImage.gameObject.SetActive(false);
-            subjectText.text = descriptionText.text = sincerelyText.text = "";
+            subjectText.text = contentText.text = sincerelyText.text = "";
         }
 
         public void SetDescription(Sprite sprite, string subject, string description, string sincerely) 
@@ -42,20 +42,25 @@ namespace PaperRealms.UI.Collectable
             cardImage.gameObject.SetActive(true);
             cardImage.sprite = sprite;
             subjectText.text = subject;
-            descriptionText.text = description;
+            contentText.text = description;
             sincerelyText.text = sincerely;
         }
 
         public void OpenCollectable()
         {
             if (isAnimating) return;
+
             isAnimating = true;
             gameObject.SetActive(true);
             transform.localScale = closedScale;
 
             LeanTween.scale(gameObject, openScale, animationDuration)
                 .setEase(LeanTweenType.easeOutBack)
-                .setOnComplete(() => { GameManager.Instance.CurrentState = GameState.Collectable; isAnimating = false; });
+                .setOnComplete(() => 
+                { 
+                    GameManager.Instance.CurrentState = GameState.Collectable; 
+                    isAnimating = false; 
+                });
         }
 
         public void CloseCollectable()
@@ -68,7 +73,12 @@ namespace PaperRealms.UI.Collectable
                 .setOnComplete(() =>
                 {
                     gameObject.SetActive(false);
-                    Observable.Timer(TimeSpan.FromSeconds(0.5f)).Subscribe(_ => { GameManager.Instance.CurrentState = GameState.GamePlay; }).AddTo(this);
+                    Observable.Timer(TimeSpan.FromSeconds(0.5f)).Subscribe(_ => 
+                    { 
+                        GameManager.Instance.CurrentState = GameState.GamePlay; 
+                    })
+                    .AddTo(this);
+                    
                     isAnimating = false;
                     ResetDescription();
                 });
