@@ -12,16 +12,17 @@ namespace PaperRealms.UI.Dialogue
     [Serializable]
     public class DialogueData
     {
-        public string ActorName;
-        public ActorType Type;
+        public string CharacterName;
+        public CharacterType Type;
         [TextArea(15,20)]
         public string Dialogue;
         
     }
 
-    public enum ActorType
+    public enum CharacterType
     {
-        Player,
+        Player1,
+        Player2,
         NPC
     }
 }

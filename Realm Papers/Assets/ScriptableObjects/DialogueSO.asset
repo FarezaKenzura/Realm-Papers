@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: DialogueSO
   m_EditorClassIdentifier: 
   Data:
-  - ActorName: wer
+  - CharacterName: Alex
     Type: 0
-    Dialogue: ewrwerw
-  - ActorName: wer
-    Type: 0
-    Dialogue: rewrwer
-  - ActorName: twre
+    Dialogue: Testing Dialog 1
+  - CharacterName: Budi
     Type: 1
-    Dialogue: werwerwre
+    Dialogue: Testing Dialog 2
+  - CharacterName: Alex
+    Type: 0
+    Dialogue: Testing Dialog 3

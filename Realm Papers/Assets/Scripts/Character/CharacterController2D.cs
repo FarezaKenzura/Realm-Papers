@@ -34,9 +34,15 @@ namespace PaperRealms.System.CharacterMovement
                     float moveInput = 0f;
 
                     if (Input.GetKey(moveLeftKey))
+                    {
                         moveInput = -1f;
+                        transform.localScale = new Vector3(-1, 1, 1);
+                    }
                     else if (Input.GetKey(moveRightKey))
+                    {
                         moveInput = 1f;
+                        transform.localScale = new Vector3(1, 1, 1);
+                    }
 
                     rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 

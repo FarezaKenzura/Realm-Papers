@@ -14,6 +14,9 @@ public static class EventManager
 
     public static Action<bool> OnGamePause;
 
+    public static Action OnMainMenuActive;
+    public static Action<bool> OnMainMenuDeactivated;
+
     public static Action<bool> SetFade;
     public static Action OnFadeInComplete;
     public static Action OnFadeOutComplete;

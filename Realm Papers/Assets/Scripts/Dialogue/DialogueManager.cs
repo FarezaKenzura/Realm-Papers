@@ -32,8 +32,6 @@ namespace PaperRealms.UI.Dialogue
 
             btnNextDialogue.onClick.AddListener(NextDialogue);
             EventManager.OnDialogueStart += SetUpDialogue;
-
-            SetUpDialogue(dialogueData);
         }
 
         private void OnDestroy()
@@ -69,14 +67,13 @@ namespace PaperRealms.UI.Dialogue
             
             if (dialogueConversationIndex < dialogueData.Data.Length)
             {
-                txtActorName.SetText(dialogueData.Data[dialogueConversationIndex].ActorName);
+                txtActorName.SetText(dialogueData.Data[dialogueConversationIndex].CharacterName);
                 StartCoroutine(GeneratingWord());
             }
             else
             {
                 EndDialogue();
             }
-            
         }
 
         IEnumerator GeneratingWord()

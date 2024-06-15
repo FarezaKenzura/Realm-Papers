@@ -13,8 +13,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenuPanel;
     [SerializeField] private GameObject settingPanel;
 
-    public bool isPauseOpen = false;
-    public bool isSettingOpen = false;
+    private bool isPauseOpen = false;
+    private bool isSettingOpen = false;
 
     private void Awake()
     {
@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+        EventManager.SetFade?.Invoke(false);
     }
 
     private void Update() 
@@ -29,19 +31,13 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isSettingOpen)
-            {
                 ButtonSettingMenu();
-            }
             else
-            {
                 ButtonPauseMenu();
-            }
         }
 
         if (Input.GetKeyDown(KeyCode.R) && isPauseOpen)
-        {
             ButtonRestartLevel();
-        }
     }
 
     public void SetCarriedObjectImage(Sprite sprite)
