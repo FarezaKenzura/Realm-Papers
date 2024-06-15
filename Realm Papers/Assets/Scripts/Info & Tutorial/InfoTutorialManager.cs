@@ -31,10 +31,17 @@ public class InfoTutorialManager : MonoBehaviour
         SetUpTutorial();
     }
 
-     private void SetUpTutorial()
+    private void SetUpTutorial()
     {
         tutorialPanel.anchoredPosition = new Vector2(-Screen.width, Screen.height);
-        LeanTween.move(tutorialPanel, Vector2.zero, 0.5f).setEase(LeanTweenType.easeOutQuad);
+        LeanTween.move(tutorialPanel, Vector2.zero, 0.5f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() => 
+            {
+                tutorialPanel.GetComponent<Image>().enabled = true;
+            });
+
+        tutorialPanel.gameObject.SetActive(true);
         UpdateTutorialContent();
         GameManager.Instance.CurrentState = GameState.Tutorial;
     }
@@ -54,13 +61,15 @@ public class InfoTutorialManager : MonoBehaviour
 
     private void EndTutorial()
     {
+        tutorialPanel.GetComponent<Image>().enabled = false;
+
         // Move to bottom right
         LeanTween.move(tutorialPanel, new Vector2(Screen.width, -Screen.height), 0.5f)
-            .setEase(LeanTweenType.easeInQuad)
+            .setEase(LeanTweenType.easeInOutQuad)
             .setOnComplete(() =>
             {
                 GameManager.Instance.CurrentState = GameState.GamePlay;
-                gameObject.SetActive(false); // Disable the animation controller object
+                tutorialPanel.gameObject.SetActive(false);
             });
     }
 

@@ -11,11 +11,21 @@ public class Mechanism : MonoBehaviour, IInteractable
     [Tooltip("Titik kontrol untuk jalur melengkung.")]
     [SerializeField] private Vector3[] controlPoints;
 
+    [Header("Visual References")]
+    [Tooltip("Sprite saat mekanisme aktif.")]
+    [SerializeField] private Sprite activeSprite;
+
+    [Tooltip("Sprite saat mekanisme tidak aktif.")]
+    [SerializeField] private Sprite inactiveSprite;
+
+    private SpriteRenderer spriteRenderer;
+
     private ReactiveProperty<bool> isActivated = new ReactiveProperty<bool>(false);
     private bool isInitialized = false;
 
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         isActivated.Subscribe(OnActivatedChanged).AddTo(this);
     }
 
@@ -40,9 +50,16 @@ public class Mechanism : MonoBehaviour, IInteractable
             return;
         }
 
+        UpdateVisualState(activated);
+
         if (activated)
             platformMover.MoveAlongPath(controlPoints);
         else
             platformMover.MoveToInitialPosition(controlPoints);
+    }
+
+    private void UpdateVisualState(bool activated)
+    {
+        spriteRenderer.sprite = activated ? activeSprite : inactiveSprite;
     }
 }

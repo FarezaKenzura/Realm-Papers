@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class BackButton : MonoBehaviour
 {
     [Header("Back Button")]
-    public Button backButton;
-    public GameObject panel;
+    [SerializeField] private Button backButton;
+    [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject mainMenuPanel;
     
     public void Start()
     { 
@@ -17,5 +18,7 @@ public class BackButton : MonoBehaviour
     public void Back()
     {
         panel.SetActive(false);
+        mainMenuPanel.SetActive(true);
+        EventManager.OnMainMenuActive?.Invoke();
     }
 }

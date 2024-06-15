@@ -13,12 +13,18 @@ public class ButtonUIResize : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private Vector3 textScale;
     private Image hoverImage;
 
-    private void Awake()
+    private void Start()
     {
         textScale = GetComponent<RectTransform>().transform.localScale;
         hoverImage = GetComponentInChildren<Image>();
 
         hoverImage.gameObject.SetActive(false);
+        EventManager.OnMainMenuDeactivated += ResetHoverAnimation;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.OnMainMenuDeactivated -= ResetHoverAnimation;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -46,8 +52,17 @@ public class ButtonUIResize : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         animId = LeanTween.scale(GetComponent<RectTransform>(), textScale, 0.15f)
             .setEaseInOutSine().id;
 
+        ResetHoverAnimation(true);
+    }
+
+    private void ResetHoverAnimation(bool disableHoverImage)
+    {
         LeanTween.cancel(hoverImage.gameObject, false);
         LeanTween.scale(hoverImage.rectTransform, textScale, 0.15f)
-            .setEaseInOutSine().setOnComplete(() => hoverImage.gameObject.SetActive(false));
+            .setEaseInOutSine().setOnComplete(() =>
+            {
+                if (disableHoverImage)
+                    hoverImage.gameObject.SetActive(false);
+            });
     }
 }
