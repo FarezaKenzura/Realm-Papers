@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 364a1a3491fe3a34081d63d7424cf725, type: 3}
   m_Name: CollectableViewerSO
   m_EditorClassIdentifier: 
-  collectableCard: {fileID: 0}
-  subjectText: wqe
-  messageText: ewqe
-  sincerelyText: eqweq
+  collectableCard: {fileID: 21300022, guid: cf57b3e7835b02e4493371d9bc259b1b, type: 3}
+  subjectText: Alex
+  messageText: This Subject For Message
+  sincerelyText: Maria
