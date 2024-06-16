@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: InfoTutorialSO
   m_EditorClassIdentifier: 
   Data:
-  - backgroundInfo: {fileID: 0}
-    subjectText: Test
-    tutorialText: fdsfsd
-  - backgroundInfo: {fileID: 0}
-    subjectText: erw
-    tutorialText: adsda
+  - backgroundInfo: {fileID: 21300010, guid: ae3918a914038694d852d0bb81f62473, type: 3}
+    subjectText: Nama Tutorial
+    tutorialText: Ini Subject Tutorial (1)
+  - backgroundInfo: {fileID: 21300014, guid: ae3918a914038694d852d0bb81f62473, type: 3}
+    subjectText: Nama Tutorial
+    tutorialText: Ini Subject Tutorial (2)
