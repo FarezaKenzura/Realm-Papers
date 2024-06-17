@@ -2,42 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PaperRealm.Type.Fitur
+namespace PaperRealm.System.Gate
 {
     public class Gate : MonoBehaviour
     {
-        [SerializeField] private GameObject _gateGO;
+        [SerializeField] private GameObject gateGO;
     
         [Header("set up parameter")]
-        [SerializeField] private Vector3 _targetLocation;
-        [SerializeField] private float _speed;
+        [SerializeField] private Vector3 targetLocation;
+        [SerializeField] private float speed;
         
-        private bool _isAbleToMove;
-        private Vector3 _firstLocation;
-        private Vector3 _currentTarget;
+        private bool isAbleToMove;
+        private Vector3 firstLocation;
+        private Vector3 currentTarget;
 
         private void Awake()
         {
-            _firstLocation = transform.localPosition;
+            firstLocation = transform.localPosition;
         }
 
         private void Update()
         {
-            if(!_isAbleToMove) return;
-            transform.localPosition = Vector3.Lerp(transform.localPosition, _currentTarget, _speed * Time.deltaTime);
-            if (Vector3.Distance(transform.localPosition, _currentTarget) < 0.01f) _isAbleToMove = false;
+            if(!isAbleToMove) return;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, currentTarget, speed * Time.deltaTime);
+            if (Vector3.Distance(transform.localPosition, currentTarget) < 0.01f) isAbleToMove = false;
         }
 
         public void OpenGate()
         {
-            _isAbleToMove = true;
-            _currentTarget = _targetLocation;          
+            isAbleToMove = true;
+            currentTarget = targetLocation;          
         }
         
         public void CloseGate()
         {
-            _isAbleToMove = true;
-            _currentTarget = _firstLocation;
+            isAbleToMove = true;
+            currentTarget = firstLocation;
         }
     }
 }
