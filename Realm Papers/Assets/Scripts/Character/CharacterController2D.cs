@@ -7,7 +7,6 @@ using UnityEngine;
 namespace PaperRealms.System.CharacterMovement
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(BoxCollider2D))]
     public class CharacterController2D : MonoBehaviour
     {
         [SerializeField] private float speed = 5f;
@@ -17,7 +16,6 @@ namespace PaperRealms.System.CharacterMovement
         [SerializeField] private KeyCode moveLeftKey;
         [SerializeField] private KeyCode moveRightKey;
         [SerializeField] private KeyCode jumpKey;
-        [SerializeField] private KeyCode pickUpKey;
 
         private Rigidbody2D rb;
         private BoolReactiveProperty isGrounded = new BoolReactiveProperty(false);
@@ -25,6 +23,7 @@ namespace PaperRealms.System.CharacterMovement
         void Start()
         {
             rb = GetComponent<Rigidbody2D>();
+            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
             // Handle movement
             Observable.EveryUpdate()

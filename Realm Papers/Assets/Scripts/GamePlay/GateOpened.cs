@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PaperRealm.Type.Fitur
+namespace PaperRealm.System.Gate
 {
     public class GateOpened : MonoBehaviour
     {
-        [SerializeField] private Gate _gate;
-        [SerializeField] private Sprite[] _gateStateSprite;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private Gate gate;
+        [SerializeField] private Sprite[] gateStateSprite;
+        [SerializeField] private SpriteRenderer spriteRenderer;
         private int count;
 
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (col.CompareTag("Player") )
             {
-                _spriteRenderer.sprite = _gateStateSprite[1];
-                _gate.OpenGate();
+                spriteRenderer.sprite = gateStateSprite[1];
+                gate.OpenGate();
                 count++;
             }
         }
@@ -31,8 +31,8 @@ namespace PaperRealm.Type.Fitur
 
                 if (count <= 0)
                 {
-                    _gate.CloseGate();
-                    _spriteRenderer.sprite = _gateStateSprite[0];
+                    gate.CloseGate();
+                    spriteRenderer.sprite = gateStateSprite[0];
                 }
             }
         }

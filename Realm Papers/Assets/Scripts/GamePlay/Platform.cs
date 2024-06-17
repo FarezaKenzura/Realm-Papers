@@ -24,7 +24,7 @@ public class Platform : MonoBehaviour
         isMoving = true;
         float startTime = Time.time;
 
-        moveSubscription = Observable.EveryUpdate()
+        moveSubscription = Observable.EveryFixedUpdate()
             .Select(_ => (Time.time - startTime) / moveDuration)
             .TakeWhile(t => t <= 1f)
             .Subscribe(t =>
