@@ -156,7 +156,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      try Lukisan 1_0: -4602171000864251781
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

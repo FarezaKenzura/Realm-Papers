@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 8832760211746244284}
   - component: {fileID: 5974894863959024416}
   - component: {fileID: 2917594800360206742}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Big Platform
-  m_TagString: Ground
-  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -125,7 +125,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.2916666, y: 0.375}
+    oldSize: {x: 0.90625, y: 0.21875}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -133,12 +133,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.5662172, y: 0.15017991}
-      - {x: -0.6134893, y: 0.10243372}
-      - {x: -0.6134893, y: -0.10104925}
-      - {x: -0.5618705, y: -0.15515591}
-      - {x: 0.5663566, y: -0.14804584}
-      - {x: 0.60637915, y: -0.10802309}
-      - {x: 0.6078472, y: 0.10320191}
-      - {x: 0.56890595, y: 0.14825131}
+    - - {x: -0.41972423, y: 0.11156937}
+      - {x: -0.45677602, y: 0.080857225}
+      - {x: -0.4556402, y: -0.07720157}
+      - {x: -0.42219132, y: -0.112002954}
+      - {x: 0.42211813, y: -0.11334177}
+      - {x: 0.45454895, y: -0.07982604}
+      - {x: 0.4538479, y: 0.078258365}
+      - {x: 0.4203292, y: 0.110293746}
   m_UseDelaunayMesh: 0
