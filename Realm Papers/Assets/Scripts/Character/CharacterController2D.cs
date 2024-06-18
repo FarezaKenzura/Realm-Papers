@@ -17,7 +17,16 @@ namespace PaperRealms.System.CharacterMovement
         [SerializeField] private KeyCode moveRightKey;
         [SerializeField] private KeyCode jumpKey;
 
+        [Header("Ground Check")]
+        [SerializeField] private Transform groundCheckTransform;
+        [SerializeField] private float groundCheckRadius = 0.1f;
+        [SerializeField] private LayerMask groundLayer;
+
+        [Header("Collider Check")]
+        [SerializeField] private float colliderCheckRadius = 0.1f;
+
         private Rigidbody2D rb;
+        private bool isOnSideOfPlatform = false;
         private BoolReactiveProperty isGrounded = new BoolReactiveProperty(false);
         
         void Start()
@@ -43,7 +52,10 @@ namespace PaperRealms.System.CharacterMovement
                         transform.localScale = new Vector3(1, 1, 1);
                     }
 
-                    rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+                    if (!isOnSideOfPlatform)
+                    {
+                        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+                    }
 
                     if (Input.GetKeyDown(jumpKey) && isGrounded.Value)
                     {
@@ -51,6 +63,35 @@ namespace PaperRealms.System.CharacterMovement
                         isGrounded.Value = false;
                     }
                 }).AddTo(this);
+                
+            // Handle ground check
+            Observable.EveryUpdate()
+                .Subscribe(_ =>
+                {
+                    CheckGround();
+                    CheckSideOfPlatform();
+                })
+                .AddTo(this);
+        }
+
+        private void CheckGround()
+        {
+            Collider2D groundCollider = Physics2D.OverlapCircle(groundCheckTransform.position, groundCheckRadius, groundLayer);
+            isGrounded.Value = groundCollider != null;
+        }
+
+        private void CheckSideOfPlatform()
+        {
+            Collider2D collider = Physics2D.OverlapCircle(transform.position, colliderCheckRadius, groundLayer);
+            isOnSideOfPlatform = false;
+
+            if (collider != null && collider.gameObject != gameObject)
+            {
+                if (Mathf.Abs(collider.transform.position.y - transform.position.y) < colliderCheckRadius)
+                {
+                    isOnSideOfPlatform = true;
+                }
+            }
         }
 
         // Teleport the player
@@ -59,12 +100,11 @@ namespace PaperRealms.System.CharacterMovement
             transform.position = destination;
         }
 
-        void OnCollisionEnter2D(Collision2D collision)
+        void OnDrawGizmos()
         {
-            if (collision.gameObject.CompareTag("Ground"))
-            {
-                isGrounded.Value = true;
-            }
+            Gizmos.color = Color.red;
+            GizmosExtension.DrawWireCircle(groundCheckTransform.position, groundCheckRadius);
+            GizmosExtension.DrawWireCircle(transform.position, colliderCheckRadius);
         }
     }
 }

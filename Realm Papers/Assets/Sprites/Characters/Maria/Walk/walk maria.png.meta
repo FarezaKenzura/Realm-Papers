@@ -252,7 +252,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      walk maria_0: 1430110060828223974
+      walk maria_1: -8730661372095573119
+      walk maria_2: -7450782298438216635
+      walk maria_3: 1056757244756696936
+      walk maria_4: 6483310974551322090
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
