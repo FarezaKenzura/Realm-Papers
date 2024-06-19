@@ -82,14 +82,18 @@ namespace PaperRealms.System.CharacterMovement
 
         private void CheckSideOfPlatform()
         {
-            Collider2D collider = Physics2D.OverlapCircle(transform.position, colliderCheckRadius, groundLayer);
+            Collider2D[] colliders = Physics2D.OverlapCapsuleAll(transform.position, new Vector2(colliderCheckRadius * 2, colliderCheckRadius * 2), CapsuleDirection2D.Vertical, 0f, groundLayer);
             isOnSideOfPlatform = false;
 
-            if (collider != null && collider.gameObject != gameObject)
+            foreach (Collider2D collider in colliders)
             {
-                if (Mathf.Abs(collider.transform.position.y - transform.position.y) < colliderCheckRadius)
+                if (collider.gameObject != gameObject)
                 {
-                    isOnSideOfPlatform = true;
+                    if (Mathf.Abs(collider.transform.position.y - transform.position.y) < colliderCheckRadius)
+                    {
+                        isOnSideOfPlatform = true;
+                        break;
+                    }
                 }
             }
         }
@@ -104,7 +108,7 @@ namespace PaperRealms.System.CharacterMovement
         {
             Gizmos.color = Color.red;
             GizmosExtension.DrawWireCircle(groundCheckTransform.position, groundCheckRadius);
-            GizmosExtension.DrawWireCircle(transform.position, colliderCheckRadius);
+            GizmosExtension.DrawWireCapsule(transform.position, colliderCheckRadius, colliderCheckRadius * 2);
         }
     }
 }
