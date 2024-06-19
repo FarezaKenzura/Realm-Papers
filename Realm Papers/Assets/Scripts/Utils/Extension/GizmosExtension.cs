@@ -19,4 +19,11 @@ public static class GizmosExtension
             Gizmos.DrawLine(points[i], points[i + 1]);
         }
     }
+
+    public static void DrawWireCapsule(Vector3 position, float radius, float height)
+    {
+        Gizmos.DrawWireSphere(position + Vector3.up * (height * 0.5f - radius), radius);
+        Gizmos.DrawWireSphere(position - Vector3.up * (height * 0.5f - radius), radius);
+        Gizmos.DrawLine(position + Vector3.up * (height * 0.5f - radius), position - Vector3.up * (height * 0.5f - radius));
+    }
 }
