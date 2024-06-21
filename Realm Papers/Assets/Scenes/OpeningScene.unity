@@ -663,7 +663,7 @@ GameObject:
   - component: {fileID: 1778340750}
   - component: {fileID: 1778340749}
   m_Layer: 0
-  m_Name: SnowParticle
+  m_Name: FogParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -692,7 +692,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 56e35b380d1a77343a19a573b93fe3fa, type: 2}
+  - {fileID: 2100000, guid: 093694f49c1433c4b8006522f079c3dd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2080,8 +2080,8 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 0
-    mode: 0
+    enabled: 1
+    mode: 1
     timeMode: 0
     fps: 30
     frameOverTime:
@@ -2199,7 +2199,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: -4486212598795998057, guid: 40a87b9b49081f24e86ba933052d87a7, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
