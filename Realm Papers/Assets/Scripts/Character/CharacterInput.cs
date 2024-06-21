@@ -7,8 +7,8 @@ public class CharacterInput : MonoBehaviour
     [SerializeField] private float interactRadius;
     [SerializeField] private List<InteractPopupData> interactPopupDataList;
     [SerializeField] private Vector3 popupOffset;
-    [SerializeField] private KeyCode interactKey = KeyCode.F;  // Interaction key
-    [SerializeField] private KeyCode dropKey = KeyCode.G;      // Drop key
+    [SerializeField] private KeyCode interactKey = KeyCode.F;
+    [SerializeField] private KeyCode dropKey = KeyCode.G;   
 
     private GameObject currentInteractPopup;
     private InteractableObject carriedObject;
@@ -62,7 +62,9 @@ public class CharacterInput : MonoBehaviour
         {
             currentInteractPopup = Instantiate(interactPopupPrefab, transform.position + popupOffset, Quaternion.identity);
             currentInteractPopup.transform.localScale = Vector3.zero;
-            LeanTween.scale(currentInteractPopup, Vector3.one, 0.5f).setEase(LeanTweenType.easeInOutQuart);
+
+            Vector3 targetScale = interactPopupPrefab.transform.localScale;
+            LeanTween.scale(currentInteractPopup, targetScale, 0.5f).setEase(LeanTweenType.easeInOutQuart);
         }
         else
         {
