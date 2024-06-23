@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PaperRealm.Type.Fitur
+namespace PaperRealm.System.Fade
 {
     public class FadeManager : MonoBehaviour
     {
+        private static FadeManager instance;
         [SerializeField] private CanvasGroup fadePanel;
         [SerializeField] private float animTime;
 
@@ -13,7 +14,12 @@ namespace PaperRealm.Type.Fitur
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            if (instance == null) {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+                Destroy(gameObject);
 
             EventManager.SetFade += SetFade;
         }

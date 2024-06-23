@@ -21,12 +21,14 @@ namespace PaperRealms.UI.MainMenu
         [SerializeField] private float buttonFadeInDuration = 0.5f;
         [SerializeField] private float buttonFadeInDelay = 0.2f;
 
+        #region Unity Callback
         private void Start()
         {
+            EventManager.OnMainMenuActive += HandleMainMenuActive;
             EventManager.SetFade?.Invoke(false);
+
             SetButtonListeners();
             HandleMainMenuActive();
-            EventManager.OnMainMenuActive += HandleMainMenuActive;
         }
 
         private void OnDestroy()
@@ -42,22 +44,27 @@ namespace PaperRealms.UI.MainMenu
             exitButton.onClick.AddListener(ExitGame);
         }
 
+        private void HandleMainMenuActive()
+        {
+            ResetButtonAlpha();
+            StartCoroutine(FadeInButtons());
+        }
+        #endregion
+
+        #region Main Menu
         private void StartGame()
         {
             EventManager.OnNextLevel?.Invoke();
-        }
-
-        private void HandleMainMenuActive()
-        {
-            StartCoroutine(FadeInButtons());
         }
 
         private void TogglePanel(GameObject panel)
         {
             ResetButtonAlpha();
             mainMenuPanel.SetActive(false);
+
             settingsPanel.SetActive(panel == settingsPanel);
             creditsPanel.SetActive(panel == creditsPanel);
+
             EventManager.OnMainMenuDeactivated?.Invoke(true);
         }
 
@@ -65,6 +72,7 @@ namespace PaperRealms.UI.MainMenu
         {
             Application.Quit();
         }
+        #endregion
 
         #region Utils
         private Button[] GetMainMenuButtons()
@@ -78,13 +86,10 @@ namespace PaperRealms.UI.MainMenu
             {
                 CanvasGroup canvasGroup = button.GetComponent<CanvasGroup>();
                 button.interactable = false;
-                if (canvasGroup != null)
-                {
-                    LeanTween.alphaCanvas(canvasGroup, 1f, buttonFadeInDuration)
-                         .setEase(LeanTweenType.easeInOutQuad)
-                         .setOnComplete(() => button.interactable = true);
-                    yield return new WaitForSeconds(buttonFadeInDelay);
-                }
+                LeanTween.alphaCanvas(canvasGroup, 1f, buttonFadeInDuration)
+                    .setEase(LeanTweenType.easeInOutQuad)
+                    .setOnComplete(() => button.interactable = true);
+                yield return new WaitForSeconds(buttonFadeInDelay);
             }
         }
 
@@ -93,10 +98,7 @@ namespace PaperRealms.UI.MainMenu
             foreach (Button button in GetMainMenuButtons())
             {
                 CanvasGroup canvasGroup = button.GetComponent<CanvasGroup>();
-                if (canvasGroup != null)
-                {
-                    canvasGroup.alpha = 0f;
-                }
+                canvasGroup.alpha = 0f;
             }
         }
         #endregion

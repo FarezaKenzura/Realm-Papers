@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7486582661678333263}
   - component: {fileID: 4403938559982691600}
   - component: {fileID: 4808961396939212020}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Small Mechanism Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,9 +74,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 1624882945
+  m_SortingLayer: 9
+  m_SortingOrder: 0
   m_Sprite: {fileID: -1938518861248244520, guid: e62432d3d76a4e1469e8b5fbfecc8918, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

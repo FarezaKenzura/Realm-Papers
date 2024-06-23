@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96b9ca80bb93d34b8abfdb52fa583e1, type: 3}
   m_Name: Interact Popup Maria
   m_EditorClassIdentifier: 
-  interactPopupPrefab: {fileID: 669443396819331719, guid: 449443a30155ce04eba9bb0bf56d088b, type: 3}
+  interactPopupPrefab: {fileID: 669443396819331719, guid: 071f6a23c10ffbf429f264b1a2a3591d, type: 3}
   objectLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 128

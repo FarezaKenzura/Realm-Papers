@@ -15,9 +15,7 @@ namespace PaperRealms.UI.Dialogue
         [SerializeField] private TextMeshProUGUI txtDialogue;
         [SerializeField] private Button btnNextDialogue;
 
-        [Header("Data Dialog")] 
-        [SerializeField] private DialogueSO dialogueData;
-
+        private DialogueSO dialogueData;
         private int dialogueConversationIndex;
 
         private Vector3 initialPosition;

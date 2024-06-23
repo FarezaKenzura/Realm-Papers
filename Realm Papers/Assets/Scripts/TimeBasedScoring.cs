@@ -10,7 +10,6 @@ namespace PaperRealm.System.Timer
         [SerializeField] private TimeManager timerManager;
         [SerializeField] private Image[] stars;
         [SerializeField] private Sprite filledStar;
-        [SerializeField] private GameObject scoreBoardPanel;
 
         public void ShowScoreBoard()
         {
@@ -23,7 +22,7 @@ namespace PaperRealm.System.Timer
             
             // Menampilkan score board dengan bintang yang diperoleh
             DisplayStars(starsAwarded);
-            scoreBoardPanel.SetActive(true);
+            gameObject.SetActive(true);
         }
 
         private int CalculateStars(float timeRemaining)
