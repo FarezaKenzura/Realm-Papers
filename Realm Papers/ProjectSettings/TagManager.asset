@@ -14,7 +14,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Mechanism
   - 
   - 
   - 
@@ -42,6 +42,33 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackgroundPlain
+    uniqueID: 2021451621
+    locked: 0
+  - name: FogParticle
+    uniqueID: 1323725485
+    locked: 0
+  - name: BackgroundMap
+    uniqueID: 672429477
+    locked: 0
+  - name: ColliderMap
+    uniqueID: 830471981
+    locked: 0
+  - name: Attribute
+    uniqueID: 1667463047
+    locked: 0
+  - name: Platform
+    uniqueID: 619709651
+    locked: 0
+  - name: Collectable
+    uniqueID: 1314128063
+    locked: 0
+  - name: Mechanism
+    uniqueID: 1624882945
+    locked: 0
+  - name: Player
+    uniqueID: 344627945
     locked: 0
   - name: UI
     uniqueID: 3599404045

@@ -15,4 +15,4 @@ MonoBehaviour:
   interactPopupPrefab: {fileID: 669443396819331719, guid: 449443a30155ce04eba9bb0bf56d088b, type: 3}
   objectLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 128

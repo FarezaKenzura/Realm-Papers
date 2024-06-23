@@ -27,7 +27,7 @@ namespace PaperRealms.UI.MainMenu
         private void Start()
         {
             currentResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", GetDefaultResolutionIndex());
-            currentQualityIndex = GetDefaultQualityIndex();
+            currentQualityIndex = PlayerPrefs.GetInt("QualityIndex", GetDefaultQualityIndex());
             
             ApplySettings();
 
@@ -38,7 +38,7 @@ namespace PaperRealms.UI.MainMenu
 
         private void ApplySettings()
         {
-            currentQualityIndex = PlayerPrefs.GetInt("QualityIndex", GetDefaultQualityIndex());
+            currentQualityIndex = Mathf.Clamp(currentQualityIndex, 0, QualitySettings.names.Length - 1);
             QualitySettings.SetQualityLevel(currentQualityIndex);
 
             UpdateResolutionText();
@@ -138,11 +138,10 @@ namespace PaperRealms.UI.MainMenu
             qualityText.text = QualitySettings.names[currentQualityIndex];
         }
 
-
         private int GetDefaultQualityIndex()
         {
             int defaultQualityIndex = QualitySettings.GetQualityLevel();
-            return defaultQualityIndex;
+            return Mathf.Clamp(defaultQualityIndex, 0, QualitySettings.names.Length - 1);
         }
 
         #endregion

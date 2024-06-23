@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace PaperRealm.Type.Fitur
+namespace PaperRealm.System.Level
 {
     public class LevelManager : MonoBehaviour
     {
+        private static LevelManager instance;
+        
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            if (instance == null) {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+                Destroy(gameObject);
 
             EventManager.OnNextLevel += NextLevel;
             EventManager.OnRestartLevel += RestartLevel;
