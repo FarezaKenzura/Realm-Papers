@@ -11,23 +11,21 @@ namespace PaperRealm.System.Timer
         [SerializeField] private Image[] stars;
         [SerializeField] private Sprite filledStar;
 
+        #region Score Star
         public void ShowScoreBoard()
         {
-            // Menghentikan timer
             timerManager.StopTimer();
 
-            // Menghitung bintang yang diperoleh
             float timeRemaining = timerManager.GetTimeRemaining();
             int starsAwarded = CalculateStars(timeRemaining);
             
-            // Menampilkan score board dengan bintang yang diperoleh
             DisplayStars(starsAwarded);
             gameObject.SetActive(true);
         }
 
         private int CalculateStars(float timeRemaining)
         {
-            float timeSpent = 300 - timeRemaining; // 300 detik adalah 5 menit
+            float timeSpent = 300 - timeRemaining;
 
             if (timeSpent <= 60)
             {
@@ -51,11 +49,25 @@ namespace PaperRealm.System.Timer
         {
             for (int i = 0; i < stars.Length; i++)
             {
-                if (i < starsAwarded)
+                stars[i].enabled = (i < starsAwarded);
+                if (stars[i].enabled)
                 {
                     stars[i].sprite = filledStar;
                 }
             }
         }
+        #endregion
+
+        #region Score Menu
+        public void NextLevel()
+        {
+            EventManager.OnNextLevel?.Invoke();
+        }
+
+        public void ToMainMenu()
+        {
+            EventManager.OnExitLevel?.Invoke();
+        }
+        #endregion
     }
 }

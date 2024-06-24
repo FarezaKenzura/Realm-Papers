@@ -17,7 +17,6 @@ namespace PaperRealm.System.Timer
             StartTimer(startTime);
         }
 
-
         public void StartTimer(float timeToCount)
         {
             timeRemaining = timeToCount;
