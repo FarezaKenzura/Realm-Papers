@@ -8,8 +8,9 @@ namespace PaperRealm.System.Sequence
     public class CutsceneSequence : MonoBehaviour
     {
         [SerializeField] private GameObject DialogueCanvas;
-
         [SerializeField] private DialogueSO dialogue;
+
+        [SerializeField] private int sceneLoad;
 
         private void Awake()
         {
@@ -38,7 +39,7 @@ namespace PaperRealm.System.Sequence
                 EventManager.SetFade?.Invoke(true);
                 LeanTween.delayedCall(1.5f, () =>
                 {
-                    EventManager.OnNextLevel?.Invoke();
+                    EventManager.OnNextLevel?.Invoke(sceneLoad);
                 });
             });
 

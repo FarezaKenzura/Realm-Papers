@@ -11,6 +11,8 @@ namespace PaperRealm.System.Timer
         [SerializeField] private Image[] stars;
         [SerializeField] private Sprite filledStar;
 
+        [SerializeField] private int loadScene;
+
         #region Score Star
         public void ShowScoreBoard()
         {
@@ -61,7 +63,7 @@ namespace PaperRealm.System.Timer
         #region Score Menu
         public void NextLevel()
         {
-            EventManager.OnNextLevel?.Invoke();
+            EventManager.OnNextLevel?.Invoke(loadScene);
         }
 
         public void ToMainMenu()

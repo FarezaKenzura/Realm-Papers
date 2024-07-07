@@ -8,7 +8,7 @@ namespace PaperRealm.System.Level
     public class LevelManager : MonoBehaviour
     {
         private static LevelManager instance;
-        
+
         private void Awake()
         {
             if (instance == null) {
@@ -30,15 +30,23 @@ namespace PaperRealm.System.Level
             EventManager.OnExitLevel -= ExitLevel;
         }
 
-        private void NextLevel()
+        private void NextLevel(int nextLevel)
         {
             EventManager.SetFade?.Invoke(true);
 
             print("Next Level");
 
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            int nextSceneIndex = currentSceneIndex + nextLevel;
+
+            if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
+            {
+                nextSceneIndex = 0;
+            }
+
             LeanTween.delayedCall(1.5f, () =>
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                SceneManager.LoadScene(nextSceneIndex);
             });
         }
 

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee8041d32dbcf14d8c8c47caac4a7c4, type: 3}
+  m_Name: Dialog Opening 1
+  m_EditorClassIdentifier: 
+  Data:
+  - CharacterName: Alex
+    Dialogue: (Berfikir Keras) Di mana aku? Ini terbuat dari kertas...
+  - CharacterName: Rachel
+    Dialogue: (Tersenyum) Halo! Kamu pasti baru di sini.
+  - CharacterName: Alex
+    Dialogue: (Terkejut) Oh, halo! Iya, aku baru saja tiba, Siapa Kamu?
+  - CharacterName: Rachel
+    Dialogue: Aku, Rachel. Aku sudah cukup lama di sini. Kamu pasti terjebak di realm
+      paper ini juga.
+  - CharacterName: Alex
+    Dialogue: (Lega) Aku Alex. Bagaimana aku bisa keluar dari sini?
+  - CharacterName: Rachel
+    Dialogue: (Berfikir) Keluar dari sini tidak mudah, tapi mungkin aku bisa membantumu,
+      Ada jalan, tapi kita harus mencari tahu caranya bersama-sama.
+  - CharacterName: Alex
+    Dialogue: (Bersemangat) Terima Kasih, Rachel. Ayo kita cari jalan keluarnya!
+  - CharacterName: Rachel
+    Dialogue: (Tersenyum) Ayo! Kita mulai dari sini.
+  - CharacterName: Rachel
+    Dialogue: (Terpesona) Lihat tempat ini, Alex! Begitu banyak yang bisa kita jelajahi.
+  - CharacterName: Alex
+    Dialogue: (Bersemangat) Ayo kita berbicara dengan orang-orang di sini. Mungkin
+      mereka bisa membantu kita menemukan jalan keluar dari realm paper.

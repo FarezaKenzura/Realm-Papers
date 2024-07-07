@@ -13,16 +13,8 @@ namespace PaperRealms.UI.Dialogue
     public class DialogueData
     {
         public string CharacterName;
-        public CharacterType Type;
         [TextArea(15,20)]
         public string Dialogue;
         
-    }
-
-    public enum CharacterType
-    {
-        Player1,
-        Player2,
-        NPC
     }
 }

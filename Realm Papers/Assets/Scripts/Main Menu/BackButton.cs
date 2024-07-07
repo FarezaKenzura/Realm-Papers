@@ -19,6 +19,7 @@ public class BackButton : MonoBehaviour
     {
         panel.SetActive(false);
         mainMenuPanel.SetActive(true);
+        AudioManager.Instance.PlaySFX("Tap");
         EventManager.OnMainMenuActive?.Invoke();
     }
 }

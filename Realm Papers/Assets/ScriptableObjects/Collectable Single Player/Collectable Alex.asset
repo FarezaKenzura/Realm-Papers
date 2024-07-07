@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 364a1a3491fe3a34081d63d7424cf725, type: 3}
+  m_Name: Collectable Alex
+  m_EditorClassIdentifier: 
+  collectableCard: {fileID: 7301883267965222155, guid: 1b41d480ed55c564eb3455c61594b981, type: 3}
+  subjectText: Halo, Alex
+  messageText: 'Kemarin, aku mengunjungi pasar kertas yang ramai, penuh dengan buah,
+    sayuran, dan pernak-pernik dari kertas. Penduduk lokalnya ramah dan suka berbagi
+    cerita tentang kerajinan kertas mereka. Aku belajar membuat bangau kertas yang
+    katanya membawa keberuntungan.
+
+
+    Bagian terbaiknya? Matahari terbenam di
+    sini sangat magis. Langit berubah menjadi kanvas pastel yang indah, memberikan
+    cahaya lembut di sekitarnya. Seperti melihat lukisan hidup.
+
+
+    Tidak sabar
+    untuk berbagi lebih banyak cerita dan foto denganmu saat kembali. Jaga dirimu
+    dan teruslah bermimpi besar!'
+  sincerelyText: Salam hangat, Rachel

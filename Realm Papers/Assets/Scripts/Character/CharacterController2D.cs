@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using PaperRealm.System.GameManager;
 using UniRx;
 using UnityEngine;
+using Cinemachine;
+using PaperRealm.System.CameraPost;
 
 namespace PaperRealms.System.CharacterMovement
 {
@@ -25,17 +27,24 @@ namespace PaperRealms.System.CharacterMovement
         [Header("Collider Check")]
         [SerializeField] private float colliderCheckRadius = 0.1f;
 
+        [Header("Cinemachine")]
+        [SerializeField] private VirtualCameraPost cameraManager;
+
         private Rigidbody2D rb;
+        private Animator animator;
         private bool isOnSideOfPlatform = false;
+        public bool IsActive { get; set; } = true;
         private BoolReactiveProperty isGrounded = new BoolReactiveProperty(false);
         
         void Start()
         {
             rb = GetComponent<Rigidbody2D>();
+            animator = GetComponentInChildren<Animator>();
             rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
             // Handle movement
             Observable.EveryUpdate()
+                .Where(_ => IsActive)
                 .Where(_ => GameManager.Instance.CurrentState == GameState.GamePlay)
                 .Subscribe(_ =>
                 {
@@ -57,15 +66,19 @@ namespace PaperRealms.System.CharacterMovement
                         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
                     }
 
+                    animator.SetBool("IsWalk", moveInput != 0);
+
                     if (Input.GetKeyDown(jumpKey) && isGrounded.Value)
                     {
                         rb.velocity = Vector2.up * jumpForce;
                         isGrounded.Value = false;
+                        AudioManager.Instance.PlaySFX("Jump");
                     }
                 }).AddTo(this);
-                
+
             // Handle ground check
             Observable.EveryUpdate()
+                .Where(_ => IsActive)
                 .Subscribe(_ =>
                 {
                     CheckGround();
@@ -102,6 +115,11 @@ namespace PaperRealms.System.CharacterMovement
         public void Teleport(Vector3 destination)
         {
             transform.position = destination;
+        }
+
+        public void SetCameraEffect(bool isActive)
+        {
+            cameraManager.SetCameraEffect(isActive);
         }
 
         void OnDrawGizmos()
