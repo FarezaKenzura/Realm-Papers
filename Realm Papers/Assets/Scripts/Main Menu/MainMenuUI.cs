@@ -56,12 +56,12 @@ namespace PaperRealms.UI.MainMenu
         #region Main Menu
         private void StartGame()
         {
-            EventManager.OnNextLevel?.Invoke();
+            EventManager.OnNextLevel?.Invoke(1);
         }
 
         private void MultiplayerGame()
         {
-            EventManager.OnNextLevel?.Invoke();
+            EventManager.OnNextLevel?.Invoke(2);
         }
 
         private void TogglePanel(GameObject panel)
@@ -84,7 +84,7 @@ namespace PaperRealms.UI.MainMenu
         #region Utils
         private Button[] GetMainMenuButtons()
         {
-            return new Button[] { startGameButton, settingButton, creditsButton, exitButton };
+            return new Button[] { startGameButton, localMultiplayerButton, settingButton, creditsButton, exitButton };
         }
 
         private IEnumerator FadeInButtons()

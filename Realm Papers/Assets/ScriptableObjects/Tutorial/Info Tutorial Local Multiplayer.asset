@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1160dadfbddb0f4f90c1e32fe185418, type: 3}
+  m_Name: Info Tutorial Local Multiplayer
+  m_EditorClassIdentifier: 
+  Data:
+  - backgroundInfo: {fileID: 2103707991764582349, guid: 510e391d6676b474e8da8486c1034616, type: 3}
+    subjectText: Movement Alex
+    tutorialText: Untuk Movement Player Bisa menggunakan "A,D" dan untuk Jump dengan
+      "W", sedangkan untuk interaksi dengan "E".
+  - backgroundInfo: {fileID: -8418535516909768599, guid: 9fb8256d8bd5a19498b7fbb9b4ea2e7b, type: 3}
+    subjectText: Movement Rachel
+    tutorialText: Untuk Movement Player Bisa menggunakan "J,L" dan untuk Jump dengan
+      "I", sedangkan untuk interaksi dengan "O".
+  - backgroundInfo: {fileID: -1770167347284401102, guid: 7e74bc1cc589d83489b0c2205b8a2619, type: 3}
+    subjectText: Mechanism
+    tutorialText: Disini terdapat mechanis untuk menggerakkan sebuah platform untuk
+      bergerak
+  - backgroundInfo: {fileID: 2695397407002535339, guid: 1b9dacdf6ae99c04a9b36119010e3f2b, type: 3}
+    subjectText: Platform
+    tutorialText: 'Untuk bentuk platform yang bergerak seperti di gambar, dan untuk
+      jenis platform yang bergerak itu berlawanan '
+  - backgroundInfo: {fileID: 5213229242370633579, guid: 9cb1cdccf707e2c44858c65dde1dea8e, type: 3}
+    subjectText: Door
+    tutorialText: Tujuan player disini untuk mencapai puncak berupa sebuah door atau
+      gate sebagai tempat Finish dan harus ke dua player untuk bisa menyelesaikannya

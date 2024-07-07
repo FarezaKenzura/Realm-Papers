@@ -149,7 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialogueCanvas: {fileID: 1639202118}
-  dialogue: {fileID: 11400000, guid: 0d69c1b1f25050241be8f5572dc6850d, type: 2}
+  dialogue: {fileID: 11400000, guid: 82c26b127d944314abf05892befe6173, type: 2}
+  sceneLoad: 2
 --- !u!4 &438496478
 Transform:
   m_ObjectHideFlags: 0
@@ -190,7 +191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2526385304224718102, guid: 2833f98107f691646b26552182d49c2a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2761774113625821021, guid: 2833f98107f691646b26552182d49c2a, type: 3}
       propertyPath: m_SortingOrder
@@ -494,7 +495,6 @@ MonoBehaviour:
   txtActorName: {fileID: 1621937017}
   txtDialogue: {fileID: 1621937018}
   btnNextDialogue: {fileID: 450025585}
-  dialogueData: {fileID: 11400000, guid: 0d69c1b1f25050241be8f5572dc6850d, type: 2}
 --- !u!1 &1287808259
 GameObject:
   m_ObjectHideFlags: 0

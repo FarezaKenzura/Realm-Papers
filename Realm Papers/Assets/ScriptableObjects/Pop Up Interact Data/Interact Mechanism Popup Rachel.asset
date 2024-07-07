@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b96b9ca80bb93d34b8abfdb52fa583e1, type: 3}
-  m_Name: Interact Popup Maria
+  m_Name: Interact Mechanism Popup Rachel
   m_EditorClassIdentifier: 
   interactPopupPrefab: {fileID: 669443396819331719, guid: 071f6a23c10ffbf429f264b1a2a3591d, type: 3}
   objectLayer:

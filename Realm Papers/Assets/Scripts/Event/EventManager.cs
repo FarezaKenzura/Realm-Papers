@@ -10,7 +10,7 @@ public static class EventManager
 
     public static Action OnRestartLevel;
     public static Action OnExitLevel;
-    public static Action OnNextLevel;
+    public static Action<int> OnNextLevel;
 
     public static Action<bool> OnGamePause;
 

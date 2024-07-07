@@ -10,15 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fee8041d32dbcf14d8c8c47caac4a7c4, type: 3}
-  m_Name: DialogueSO
+  m_Name: Dialog Ending
   m_EditorClassIdentifier: 
   Data:
+  - CharacterName: Rachel
+    Dialogue: Lihat, Alex! Ada sesuatu yang bersinar di bawah pohon itu.
   - CharacterName: Alex
-    Type: 0
-    Dialogue: Testing Dialog 1
-  - CharacterName: Budi
-    Type: 1
-    Dialogue: Testing Dialog 2
-  - CharacterName: Alex
-    Type: 0
-    Dialogue: Testing Dialog 3
+    Dialogue: (Mengambil halaman) Ini pasti salah satu halaman yang hilang. ayo kita
+      cari sisanya.

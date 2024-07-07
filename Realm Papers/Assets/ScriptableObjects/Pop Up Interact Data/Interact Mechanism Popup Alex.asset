@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 364a1a3491fe3a34081d63d7424cf725, type: 3}
-  m_Name: CollectableViewerSO
+  m_Script: {fileID: 11500000, guid: b96b9ca80bb93d34b8abfdb52fa583e1, type: 3}
+  m_Name: Interact Mechanism Popup Alex
   m_EditorClassIdentifier: 
-  collectableCard: {fileID: 21300022, guid: cf57b3e7835b02e4493371d9bc259b1b, type: 3}
-  subjectText: Alex
-  messageText: This Subject For Message
-  sincerelyText: Maria
+  interactPopupPrefab: {fileID: 669443396819331719, guid: 449443a30155ce04eba9bb0bf56d088b, type: 3}
+  objectLayer:
+    serializedVersion: 2
+    m_Bits: 128
