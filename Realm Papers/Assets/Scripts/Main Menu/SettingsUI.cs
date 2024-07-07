@@ -19,21 +19,23 @@ namespace PaperRealms.UI.MainMenu
         [SerializeField] private Slider masterVolumeSlider;
         [SerializeField] private Slider musicVolumeSlider;
         [SerializeField] private Slider sfxVolumeSlider;
-        //[SerializeField] private AudioManager audioManager;
+        [SerializeField] private AudioManager audioManager;
 
         private int currentResolutionIndex;
         private int currentQualityIndex;
 
         private void Start()
         {
+            audioManager = FindFirstObjectByType<AudioManager>();
+
             currentResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", GetDefaultResolutionIndex());
             currentQualityIndex = PlayerPrefs.GetInt("QualityIndex", GetDefaultQualityIndex());
             
             ApplySettings();
 
-            //masterVolumeSlider.onValueChanged.AddListener(value => SetVolume(masterVolumeSlider, value));
-            //musicVolumeSlider.onValueChanged.AddListener(value => SetVolume(musicVolumeSlider, value));
-            //sfxVolumeSlider.onValueChanged.AddListener(value => SetVolume(sfxVolumeSlider, value));
+            masterVolumeSlider.onValueChanged.AddListener(value => SetVolume(masterVolumeSlider, value));
+            musicVolumeSlider.onValueChanged.AddListener(value => SetVolume(musicVolumeSlider, value));
+            sfxVolumeSlider.onValueChanged.AddListener(value => SetVolume(sfxVolumeSlider, value));
         }
 
         private void ApplySettings()
@@ -44,13 +46,13 @@ namespace PaperRealms.UI.MainMenu
             UpdateResolutionText();
             UpdateQualityText();
 
-            //masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", audioManager.GetVolume(AudioSourceType.Master));
-            //musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", audioManager.GetVolume(AudioSourceType.Music));
-            //sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", audioManager.GetVolume(AudioSourceType.SFX));
+            masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", audioManager.GetVolume(AudioSourceType.Master));
+            musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", audioManager.GetVolume(AudioSourceType.Music));
+            sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", audioManager.GetVolume(AudioSourceType.SFX));
 
-            //masterVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Master);
-            //musicVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Music);
-            //sfxVolumeSlider.value = audioManager.GetVolume(AudioSourceType.SFX);
+            masterVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Master);
+            musicVolumeSlider.value = audioManager.GetVolume(AudioSourceType.Music);
+            sfxVolumeSlider.value = audioManager.GetVolume(AudioSourceType.SFX);
         }
 
         #region Resolution
@@ -59,6 +61,7 @@ namespace PaperRealms.UI.MainMenu
         {
             currentResolutionIndex = Mathf.Min(currentResolutionIndex + 1, resolutions.Count - 1);
             SetResolution(currentResolutionIndex);
+            AudioManager.Instance.PlaySFX("Tap");
             UpdateResolutionText();
         }
 
@@ -66,6 +69,7 @@ namespace PaperRealms.UI.MainMenu
         {
             currentResolutionIndex = Mathf.Max(currentResolutionIndex - 1, 0);
             SetResolution(currentResolutionIndex);
+            AudioManager.Instance.PlaySFX("Tap");
             UpdateResolutionText();
         }
 
@@ -122,6 +126,7 @@ namespace PaperRealms.UI.MainMenu
             currentQualityIndex = Mathf.Min(currentQualityIndex + 1, QualitySettings.names.Length - 1);
             QualitySettings.SetQualityLevel(currentQualityIndex);
             PlayerPrefs.SetInt("QualityIndex", currentQualityIndex);
+            AudioManager.Instance.PlaySFX("Tap");
             UpdateQualityText();
         }
 
@@ -130,6 +135,7 @@ namespace PaperRealms.UI.MainMenu
             currentQualityIndex = Mathf.Max(currentQualityIndex - 1, 0);
             QualitySettings.SetQualityLevel(currentQualityIndex);
             PlayerPrefs.SetInt("QualityIndex", currentQualityIndex);
+            AudioManager.Instance.PlaySFX("Tap");
             UpdateQualityText();
         }
 
@@ -148,7 +154,7 @@ namespace PaperRealms.UI.MainMenu
 
         #region Volume
 
-        /*public void SetVolume(Slider slider, float volume)
+        public void SetVolume(Slider slider, float volume)
         {
             if (slider == masterVolumeSlider)
             {
@@ -166,7 +172,7 @@ namespace PaperRealms.UI.MainMenu
             PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
             PlayerPrefs.SetFloat("MusicVolume", musicVolumeSlider.value);
             PlayerPrefs.SetFloat("SFXVolume", sfxVolumeSlider.value);
-        }*/
+        }
 
         #endregion
     }

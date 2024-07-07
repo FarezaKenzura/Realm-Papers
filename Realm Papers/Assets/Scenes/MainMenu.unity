@@ -153,7 +153,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 13c6e8bd34bbc3a438ab4f5847308679, type: 3}
   audioSFX:
   - name: Tap
-    clip: {fileID: 8300000, guid: 9adf2f3bb4ae8564b86b4d8c222cb0c0, type: 3}
+    clip: {fileID: 8300000, guid: bfc2a08bc6eedea4992c790908594a17, type: 3}
   - name: Jump
     clip: {fileID: 8300000, guid: 507560e78b7450a4f9b6d17ab1a1c023, type: 3}
   musicSource: {fileID: 1843707608}

@@ -44,6 +44,7 @@ public class CharacterInput : MonoBehaviour
                 if (Input.GetKeyDown(interactKey))
                 {
                     interactable.Interact();
+                    AudioManager.Instance.PlaySFX("Tap");
                     TryPickupObject(col.GetComponent<InteractableObject>());
                 }
 
@@ -62,6 +63,7 @@ public class CharacterInput : MonoBehaviour
         {
             currentInteractPopup = Instantiate(interactPopupPrefab, transform.position + popupOffset, Quaternion.identity);
             currentInteractPopup.transform.localScale = Vector3.zero;
+            AudioManager.Instance.PlaySFX("Tap");
 
             Vector3 targetScale = interactPopupPrefab.transform.localScale;
             LeanTween.scale(currentInteractPopup, targetScale, 0.5f).setEase(LeanTweenType.easeInOutQuart);

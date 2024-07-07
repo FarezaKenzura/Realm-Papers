@@ -28,6 +28,8 @@ namespace PaperRealms.UI.MainMenu
             EventManager.OnMainMenuActive += HandleMainMenuActive;
             EventManager.SetFade?.Invoke(false);
 
+            AudioManager.Instance.PlayMusic("Better");
+
             SetButtonListeners();
             HandleMainMenuActive();
         }
@@ -56,16 +58,19 @@ namespace PaperRealms.UI.MainMenu
         #region Main Menu
         private void StartGame()
         {
+            AudioManager.Instance.PlaySFX("Tap");
             EventManager.OnNextLevel?.Invoke(1);
         }
 
         private void MultiplayerGame()
         {
+            AudioManager.Instance.PlaySFX("Tap");
             EventManager.OnNextLevel?.Invoke(2);
         }
 
         private void TogglePanel(GameObject panel)
         {
+            AudioManager.Instance.PlaySFX("Tap");
             ResetButtonAlpha();
             mainMenuPanel.SetActive(false);
 
@@ -77,6 +82,7 @@ namespace PaperRealms.UI.MainMenu
 
         private void ExitGame()
         {
+            AudioManager.Instance.PlaySFX("Tap");
             Application.Quit();
         }
         #endregion

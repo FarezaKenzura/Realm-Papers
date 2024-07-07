@@ -23,12 +23,12 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null)
-        {
-            Destroy(gameObject);
-            return;
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     public void PlayMusic(string name)

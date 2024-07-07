@@ -62,7 +62,7 @@ namespace PaperRealms.UI.Dialogue
         private void NextDialogue()
         {
             btnNextDialogue.interactable = false;
-            
+            AudioManager.Instance.PlaySFX("Tap");
             if (dialogueConversationIndex < dialogueData.Data.Length)
             {
                 txtActorName.SetText(dialogueData.Data[dialogueConversationIndex].CharacterName);
@@ -80,6 +80,7 @@ namespace PaperRealms.UI.Dialogue
             for (int i = 0; i <= dialogueData.Data[dialogueConversationIndex].Dialogue.Length; i++)
             {
                 txtDialogue.maxVisibleCharacters = i;
+                AudioManager.Instance.PlaySFX("Tap");
                 yield return new WaitForSeconds(0.02f);
             }
             btnNextDialogue.interactable = true;

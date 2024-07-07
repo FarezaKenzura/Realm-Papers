@@ -72,6 +72,7 @@ namespace PaperRealms.System.CharacterMovement
                     {
                         rb.velocity = Vector2.up * jumpForce;
                         isGrounded.Value = false;
+                        AudioManager.Instance.PlaySFX("Jump");
                     }
                 }).AddTo(this);
 
